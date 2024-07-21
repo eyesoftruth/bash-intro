@@ -1,0 +1,342 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introduction to Bash",
+    "section": "",
+    "text": "Installing VS Code and FileZilla\nWelcome to the Introduction to BASH class! In this course, we will be exploring the basics of the Bash shell, a powerful tool for interacting with your computer’s operating system. Bash is widely used in bioinformatics for tasks ranging from data processing to system administration. To enhance our learning experience and prepare us for using different bioinformatics software and accessing high-performance computing (HPC) facilities, we will use two key tools: VS Code and FileZilla.\n\nWhy Use VS Code and FileZilla?\nVS Code (Visual Studio Code):\n\nIntegrated Terminal: VS Code comes with an integrated terminal that supports Bash, making it a convenient all-in-one tool for writing and executing shell commands.\nCross-Platform Compatibility: It works on Windows, macOS, and Linux, ensuring all students can use the same tool regardless of their operating system.\nText Editor: VS Code also includes a powerful text editor that supports syntax highlighting and other features that make writing scripts easier and more efficient.\n\nFileZilla:\n\nFile Transfer Protocol: FileZilla is a free, open-source FTP client that allows you to transfer files between your local machine and a remote server. This is particularly useful for managing files and scripts in a remote environment.\nEase of Use: It has an intuitive graphical interface that makes it easy to use, even for beginners.\n\n\n\nInstallation Instructions\nVS Code:\n\n\nWindows:\n\n\nDownload the Visual Studio Code installer for Windows.\nOnce it is downloaded, run the installer (VSCodeUserSetup-{version}.exe). This will only take a minute.\nBy default, VS Code is installed under C:\\Users\\Username\\AppData\\Local\\Programs\\Microsoft VS Code\n\n\nmacOS:\n\n\nDownload Visual Studio Code for macOS.\nOpen the browser’s download list and locate the downloaded app or archive.\nIf archive, extract the archive contents. Use double-click for some browsers or select the ‘magnifying glass’ icon with Safari.\nDrag Visual Studio Code.app to the Applications folder, making it available in the macOS Launchpad.\nOpen VS Code from the Applications folder, by double clicking the icon.\nAdd VS Code to your Dock by right-clicking on the icon, located in the Dock, to bring up the context menu and choosing Options, Keep in Dock.\n\n\nLinux:\n\nVisit the VS Code download page.\nFollow the instructions specific to your distribution (e.g., Ubuntu, Fedora, etc.).\n\n\nFileZilla:\n\n\nWindows:\n\nVisit the FileZilla download page.\nClick on the “Download FileZilla Client” button.\nRun the installer and follow the prompts to complete the installation.\n\nmacOS:\n\nVisit the FileZilla download page.\nClick on the “Download FileZilla Client” button.\nOpen the downloaded file and drag the FileZilla icon to the Applications folder.\n\nLinux:\n\nYou can install FileZilla via your package manager. For example, on Ubuntu, you can use the command:\n\n\n     sudo apt-get install filezilla\n\n\nPreparation for Class\nPlease ensure you have both VS Code and FileZilla installed on your computer before attending the class. This will allow us to dive straight into the practical aspects of learning Bash without any delays.\nWe look forward to helping you develop your skills in Bash scripting and system administration. If you encounter any issues during installation, please do not hesitate to reach out for assistance.",
+    "crumbs": [
+      "Installing VS Code and FileZilla"
+    ]
+  },
+  {
+    "objectID": "First_Time_Accessing_the_Server.html",
+    "href": "First_Time_Accessing_the_Server.html",
+    "title": "First Time Accessing the Server",
+    "section": "",
+    "text": "Accessing the Server\nEach student will be provided with a unique user ID (e.g., s-1, s-2, s-3) and the server’s IP address. To access the server, you will use the ssh (Secure Shell) command. SSH allows you to securely connect to the server and interact with it via the command line.",
+    "crumbs": [
+      "First Time Accessing the Server"
+    ]
+  },
+  {
+    "objectID": "First_Time_Accessing_the_Server.html#accessing-the-server",
+    "href": "First_Time_Accessing_the_Server.html#accessing-the-server",
+    "title": "First Time Accessing the Server",
+    "section": "",
+    "text": "Using the SSH Command\n\nOpen VS Code Terminal:\n\nLaunch Visual Studio Code.\nOpen the integrated terminal by pressing Ctrl + (backtick) or navigating to Terminal &gt; New Terminal or View &gt; Terminal (depending on VS Code version) from the menu.\n\n\n\n\nConnect to the Server:\n\nIn the terminal, type the following command:\nssh your_user_id@server_ip\nReplace your_user_id with your assigned user ID (e.g., s-1) and server_ip with the provided IP address of the server.\nPress Enter.\n\nEnter Your Password:\n\nYou will be prompted to enter your password. Note that in Linux, when you type your password, nothing will be displayed on the screen (no asterisks or dots) for security reasons. This is different from Windows, where you typically see asterisks.\n\nSuccessful Connection:\n\nIf your credentials are correct, you will be logged into the server and see a welcome message or command prompt.",
+    "crumbs": [
+      "First Time Accessing the Server"
+    ]
+  },
+  {
+    "objectID": "1_Introducing_the_Shell.html",
+    "href": "1_Introducing_the_Shell.html",
+    "title": "1  Introducing the Shell",
+    "section": "",
+    "text": "1.1 Accessing the Server\nEach student will be provided with a unique user ID (e.g., s-1, s-2, s-3) and the server’s IP address. To access the server, you will use the ssh (Secure Shell) command. SSH allows you to securely connect to the server and interact with it via the command line.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducing the Shell</span>"
+    ]
+  },
+  {
+    "objectID": "1_Introducing_the_Shell.html#accessing-the-server",
+    "href": "1_Introducing_the_Shell.html#accessing-the-server",
+    "title": "1  Introducing the Shell",
+    "section": "",
+    "text": "1.1.1 Using the SSH Command\n\nOpen VS Code Terminal:\n\nLaunch Visual Studio Code.\nOpen the integrated terminal by pressing Ctrl + (backtick) or navigating to Terminal &gt; New Terminal or View &gt; Terminal (depending on VS Code version) from the menu.\n\n\n\n\nConnect to the Server:\n\nIn the terminal, type the following command:\nssh your_user_id@server_ip\nReplace your_user_id with your assigned user ID (e.g., s-1) and server_ip with the provided IP address of the server.\nPress Enter.\n\nEnter Your Password:\n\nYou will be prompted to enter your password. Note that in Linux, when you type your password, nothing will be displayed on the screen (no asterisks or dots) for security reasons. This is different from Windows, where you typically see asterisks.\n\nSuccessful Connection:\n\nIf your credentials are correct, you will be logged into the server and see a welcome message or command prompt.\n\n\n\n\n\n1.1.2 What is a Shell?\nA shell is a command-line interface (CLI) that allows users to interact with the operating system by typing commands. It acts as an intermediary between the user and the kernel, interpreting and executing commands entered by the user. The shell is a powerful tool for managing files, running programs, and automating tasks through scripts.\n\n\n1.1.3 Why Use the Shell?\n\nEfficiency: The shell allows users to perform complex tasks with simple commands, which can be more efficient than using a graphical user interface (GUI).\nAutomation: With the shell, users can write scripts to automate repetitive tasks, saving time and reducing errors.\nFlexibility: The shell provides access to a wide range of tools and utilities, making it versatile for different types of tasks.\nControl: Advanced users can have more control over the system and its processes compared to using a GUI.\n\n\n\n1.1.4 The Shell Prompt\nWhen you open a terminal window, you will see a shell prompt. This prompt indicates that the shell is ready to accept commands. The prompt usually looks something like this:\nusername@hostname:~$\nHere’s a breakdown of the components:\n\nusername: Your user name on the system.\nhostname: The name of the computer or server.\n~: The current directory (in this case, ~ represents the home directory).\n$: The prompt symbol for a standard user (it changes to # for the root user).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducing the Shell</span>"
+    ]
+  },
+  {
+    "objectID": "1_Introducing_the_Shell.html#understanding-directories",
+    "href": "1_Introducing_the_Shell.html#understanding-directories",
+    "title": "1  Introducing the Shell",
+    "section": "1.2 Understanding Directories",
+    "text": "1.2 Understanding Directories\n\n1.2.1 Home Directory\nUpon logging in, you will be in your home directory, usually located at /home/your_user_id. This directory is your personal space on the server. However, the home directory is usually very small and should not be used for extensive work or large data storage.\n\n\n1.2.2 Scratch Directory\nThe /scratch directory (or similar) is a designated area for temporary storage of large files and data processing. This space is typically much larger than your home directory and is intended for heavy computational tasks.\n\n\n1.2.3 Working Directory\nFor our course, you will use /mnt/s-ws/your_user_id as your working directory. This directory provides ample space for your projects and assignments.\n\n\n1.2.4 Navigating Directories\n\nWho Am I? (whoami):\n\nThis command prints your current user ID.\nUsage:\nwhoami\n\nPrint Working Directory (pwd):\n\nThis command displays the full path of your current directory.\nUsage:\npwd\n\nChange Directory (cd):\n\nUse the cd command to navigate to your working directory.\nExample:\ncd /mnt/s-ws/your_user_id\n\n\n\n\n1.2.5 Listing the files in the current directory\n\nls will list of the contents of the current directory\n\nExample:\n\nls\nCommand not found\n\nIf the shell can’t find a program whose name is the command you typed, it will print an error message such as:\n\nks",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducing the Shell</span>"
+    ]
+  },
+  {
+    "objectID": "1_Introducing_the_Shell.html#summary",
+    "href": "1_Introducing_the_Shell.html#summary",
+    "title": "1  Introducing the Shell",
+    "section": "1.3 Summary",
+    "text": "1.3 Summary\nBy following these steps, you will be able to access the server and navigate the directories effectively. Here’s a quick summary:\n\nUse SSH to connect to the server.\nEnter your password (nothing will be shown as you type).\nUnderstand the purpose of the home directory and /scratch.\nUse /mnt/s-ws/your_user_id as your working directory.\nLearn basic commands (whoami, pwd, ls) and use Tab for auto-completion.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducing the Shell</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html",
+    "href": "2_Navigating_Files_and_Directories.html",
+    "title": "2  Navigating Files and Directories",
+    "section": "",
+    "text": "2.1 The File System\nThe part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called “folders”), which hold files or other directories.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#the-file-system",
+    "href": "2_Navigating_Files_and_Directories.html#the-file-system",
+    "title": "2  Navigating Files and Directories",
+    "section": "",
+    "text": "2.1.1 The Root Directory\nThe root directory is the top-level directory in a file system. It is represented by a single forward slash (/). Every other file or directory in the file system is contained within the root directory, either directly or indirectly. Think of it as the starting point of the file system hierarchy.\n\n\n2.1.2 The Home Directory\nThe home directory is a special directory designated for a specific user. It is where users have their personal space to store files and directories. Each user on the system has their own home directory. In most Linux systems, the home directory for a user named “username” would be /home/username. For the root user, the home directory is usually /root.\n\n\n2.1.3 The Uses of /\nThe forward slash (/) serves two important purposes in the file system:\n\nRoot Directory: As mentioned, the single forward slash represents the root directory. It is the base of the file system hierarchy.\nPath Separator: The forward slash is also used to separate directories and files in a path. For example, in the path /home/username/Documents, the slashes separate the directories home, username, and Documents.\n\n\n\n2.1.4 Examples\n\nRoot Directory: The command cd / changes the current directory to the root directory.\nHome Directory: The command cd ~ or cd /home/username changes the current directory to the home directory of the user “username”.\nPath Separator: In the path /home/username/Documents/file.txt, the slashes are used to navigate through the directories from the root to the file file.txt.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#commands-arguments-and-flags",
+    "href": "2_Navigating_Files_and_Directories.html#commands-arguments-and-flags",
+    "title": "2  Navigating Files and Directories",
+    "section": "2.2 Commands, Arguments, and Flags",
+    "text": "2.2 Commands, Arguments, and Flags\nWhen working with the command line, you will often use commands. Commands are instructions you give to the computer to perform a specific task. A command can be followed by arguments (or parameters) and flags (or options) to modify its behavior.\n\n\nCommand: The base instruction to perform a task. For example, ls is a command that lists directory contents.\nArguments: Additional information you provide to the command. For example, in ls /home/username, /home/username is an argument specifying the directory to list.\nFlags: Options that modify the behavior of the command. Flags are usually preceded by a hyphen. For example, ls -F uses the -F flag to modify the output.\n\n\n2.2.1 Example with ls and the -F Flag\nThe ls command lists the contents of a directory. By default, it shows the names of the files and directories. Adding the -F flag to ls appends a character to each file name to indicate the type of file. For instance, a forward slash (/) is added to directories, an asterisk (*) to executable files, and an at sign (@) to symbolic links.\nExample:\n# ls -F /home/username\nls -F /mnt/s-ws/everyone/\nThis command lists the contents of /home/username and appends type-indicating characters to each name.\n\n\n2.2.2 Other Useful Flags for ls\n\n-l: Lists in long format, providing detailed information like permissions, number of links, owner, group, size, and timestamp.\n\n# -l gives you more details on all files\nls -l /mnt/s-ws/everyone/\n\n-a: Lists all files, including hidden files (those starting with a dot).\n\n# -l gives you more details on all files\nls -a /mnt/s-ws/everyone/\n\n-h: With -l, shows sizes in human-readable format (e.g., KB, MB).\n\n\nls -l -h /mnt/s-ws/everyone/\n\n# you can also merge flags\nls -lh /mnt/s-ws/everyone/\n\n-R: Lists all subdirectories recursively.\n-t: Sorts by modification time, with the newest files first.\n-r: Reverses the order of the sort.\n-d: Lists directories themselves, not their contents.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#clearing-your-terminal",
+    "href": "2_Navigating_Files_and_Directories.html#clearing-your-terminal",
+    "title": "2  Navigating Files and Directories",
+    "section": "2.3 Clearing Your Terminal",
+    "text": "2.3 Clearing Your Terminal\nWhen working in the terminal, your screen can quickly become cluttered with output from various commands. To clear the terminal and create a fresh workspace, you can use the clear command.\n\n2.3.1 Using the clear Command\nThe clear command clears all the previous output in the terminal, giving you a clean slate. Simply type clear and press Enter:\nclear\nThis will remove all previous text from the screen, making it easier to focus on new commands and their output.\n\n\n2.3.2 Navigating Command History\nThe terminal keeps a history of the commands you have entered. You can quickly navigate through your previous commands using the up and down arrow keys:\n\n↑ Up Arrow: Press the ↑ (up arrow) key to scroll through the commands you have previously entered, starting with the most recent.\n↓ Down Arrow: Press the ↓ (down arrow) key to scroll forward through the commands if you have gone back in your command history.\n\nUsing these keys can save you time, especially when you need to re-run or modify previous commands.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#using-tab-for-auto-complete",
+    "href": "2_Navigating_Files_and_Directories.html#using-tab-for-auto-complete",
+    "title": "2  Navigating Files and Directories",
+    "section": "2.4 Using Tab for Auto-Complete",
+    "text": "2.4 Using Tab for Auto-Complete\nThe tab key can significantly enhance your efficiency in the terminal by providing auto-completion for commands, file names, and directories. Here’s how you can use it:\n\nAuto-Complete Commands: Start typing a command and press the tab key. If the command is unique, the terminal will auto-complete it. For example, typing cle and pressing tab will auto-complete to clear if no other commands start with cle.\nAuto-Complete File and Directory Names: When typing file or directory names, you can use the tab key to quickly complete the names. For instance, if you have a file named document.txt in the current directory, typing doc and pressing tab will auto-complete the name to document.txt.\nList Possible Completions: If there are multiple possible completions, pressing the tab key twice will list all the possible completions. For example, if you have files named document1.txt, document2.txt, and document3.txt, typing doc and pressing tab twice will list all three options.\n\nUsing the tab key for auto-completion can save you time and help avoid errors when typing long commands or file names.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#getting-help",
+    "href": "2_Navigating_Files_and_Directories.html#getting-help",
+    "title": "2  Navigating Files and Directories",
+    "section": "2.5 Getting Help",
+    "text": "2.5 Getting Help\nWhen working in the terminal, you often need more information about commands and their options. Two essential tools for this are the --help option and the man (manual) command.\n\n2.5.1 Using --help\nMost commands in the terminal have a --help option that provides a brief overview of how to use the command, along with a list of available options and flags. For example, to get help on the ls command, you can type:\nls --help\nThis command will display a brief description of ls and its options. The output typically includes: - A summary of what the command does. - A list of available flags and options. - Short descriptions of each flag and option.\n\n\n2.5.2 Using man\nThe man command displays the manual page for a command, providing more detailed information than --help. To read the manual page for the ls command, you can type:\nman ls\nThe manual page will include: - NAME: The name of the command and a brief description. - SYNOPSIS: The syntax for using the command. - DESCRIPTION: A detailed description of what the command does. - OPTIONS: A comprehensive list of all options and flags, with explanations. - EXAMPLES: Examples of how to use the command.\n\n\n2.5.3 Reading the Output\nWhen you use --help or man, the output will appear in the terminal. Here’s how to navigate and quit these outputs:\n\n--help Output: The --help output typically fits within a single screen. You can scroll through it using the scroll bar or your mouse.\nman Output: The man output is displayed in a pager (usually less), which allows you to scroll through the document.\n\n\n2.5.3.1 Navigating man Output\n\nScroll Down: Use the down arrow key or the Page Down key to scroll down.\nScroll Up: Use the up arrow key or the Page Up key to scroll up.\nSearch: Press / followed by a keyword to search within the manual page.\nQuit: Press q to quit and return to the terminal prompt.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#special-folders-.-and-..",
+    "href": "2_Navigating_Files_and_Directories.html#special-folders-.-and-..",
+    "title": "2  Navigating Files and Directories",
+    "section": "2.6 Special Folders: . and ..",
+    "text": "2.6 Special Folders: . and ..\nIn the file system, there are two special directory references: . (dot) and .. (dot dot). These are used to represent the current directory and the parent directory, respectively. Understanding these references is crucial for navigating the file system efficiently.\n\n2.6.1 The . (Dot) Directory\nThe . directory refers to the current directory. It is useful when you need to execute commands or scripts in the current directory or specify the current directory explicitly.\n\n2.6.1.1 Example:\n# List the contents of the current directory\nls .\n\n\n\n2.6.2 The .. (Dot Dot) Directory\nThe .. directory refers to the parent directory, which is one level up in the file system hierarchy. This is helpful for moving up directories without specifying the full path.\n\n2.6.2.1 Example:\n# Move up one directory\ncd ..\n\n\n\n2.6.3 Nested .. Directories\nYou can chain multiple .. references to move up several levels in the directory hierarchy. Each .. moves you up one directory level.\n\n2.6.3.1 Example:\n# Move up two directories and then into a folder named folder_name\n# cd ../../folder_name\ncd ../../data\nIn this example: - The first .. moves up one level. - The second .. moves up another level. - After moving up two levels, the command then moves into the directory data.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "2_Navigating_Files_and_Directories.html#absolute-path-and-relative-path",
+    "href": "2_Navigating_Files_and_Directories.html#absolute-path-and-relative-path",
+    "title": "2  Navigating Files and Directories",
+    "section": "2.7 Absolute Path and Relative Path",
+    "text": "2.7 Absolute Path and Relative Path\n\n2.7.1 Absolute Path\nAn absolute path is a complete path from the root directory (/) to the desired file or directory. It always starts with a forward slash and provides the full location, ensuring that you can access the file or directory from anywhere in the file system.\n\n2.7.1.1 Example:\nIf you have a directory named FastQC inside /mnt/s-ws/everyone, the absolute path to this directory would be:\n/mnt/s-ws/everyone/FastQC\n\n\n\n2.7.2 Relative Path\nA relative path specifies a location relative to the current directory. It does not start with a forward slash and can use special directory references like . (current directory) and .. (parent directory) to navigate through the file system.\n\n2.7.2.1 Example:\nAssuming your current directory is /mnt/s-ws/everyone:\n\nTo access the FastQC directory, you can use the relative path:\ncd FastQC\nTo go up one level and then into another directory (e.g., Quiz), you can use:\ncd ../Quiz\n\n\n\n\n2.7.3 Example Paths\nGiven the absolute path /mnt/s-ws/everyone and a folder FastQC inside it:\n\nAccessing FastQC using an absolute path:\ncd /mnt/s-ws/everyone/FastQC\nThis command changes the directory to FastQC from anywhere in the file system.\nAccessing FastQC using a relative path:\ncd FastQC\nThis command changes the directory to FastQC assuming you are already in /mnt/s-ws/everyone.\n\n\n\n2.7.4 Summary\n\nThe file system manages files and directories.\nThe root directory (/) is the top-level directory.\nThe home directory is a personal directory for each user.\nThe forward slash (/) is used both as the root directory and as a separator in file paths.\nCommands are instructions, arguments provide additional information, and flags modify behavior.\nThe ls command lists directory contents, and flags like -F, -l, -a, -h, and -R enhance its functionality.\npwd prints the user’s current working directory.\nls [path] prints a listing of a specific file or directory; ls on its own lists the current working directory.\ncd [path] changes the current working directory.\nMost commands take options that begin with a single -.\n/ on its own is the root directory of the whole file system.\n. on its own means ‘the current directory’; .. means ‘the directory above the current one’.\nAbsolute Path: Provides the full path from the root directory, ensuring access from anywhere in the file system. Example: /mnt/s-ws/everyone/FastQC.\nRelative Path: Specifies the location relative to the current directory. Example: FastQC from /mnt/s-ws/everyone.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Navigating Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html",
+    "href": "3_Working_With_Files_and_Directories.html",
+    "title": "3  Working With Files and Directories",
+    "section": "",
+    "text": "3.1 Creating directories\nWe now know how to explore files and directories, but how do we create them in the first place?",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#creating-directories",
+    "href": "3_Working_With_Files_and_Directories.html#creating-directories",
+    "title": "3  Working With Files and Directories",
+    "section": "",
+    "text": "3.1.1 Step one: see where we are and what we already have\npwd\n# move to the directory in /mnt/s-ws/ designated for you\n# cd /mnt/s-ws/{your id}\ncd /mnt/s-ws/mamun\n# view the current contents\nls -F\n\n\n3.1.2 Create a directory\nLet’s create a new directory called thesis using the command mkdir thesis (which has no output):\n\nmkdir thesis\nAs you might guess from its name, mkdir means ‘make directory’. Since thesis is a relative path (i.e., does not have a leading slash, like /what/ever/thesis), the new directory is created in the current working directory:\n\nls -F\nSince we’ve just created the thesis directory, there’s nothing in it yet:\n\nls -F thesis\nNote that mkdir is not limited to creating single directories one at a time. The -p option allows mkdir to create a directory with nested subdirectories in a single operation:\nmkdir -p ../project/data ../project/results\nThe -R option to the ls command will list all nested subdirectories within a directory. Let’s use ls -FR to recursively list the new directory hierarchy we just created in the project directory:\nls -FR ../project",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#good-names-for-files-and-directories",
+    "href": "3_Working_With_Files_and_Directories.html#good-names-for-files-and-directories",
+    "title": "3  Working With Files and Directories",
+    "section": "3.2 Good names for files and directories",
+    "text": "3.2 Good names for files and directories\nComplicated names of files and directories can make your life painful when working on the command line. Here we provide a few useful tips for the names of your files and directories.\nDon’t use spaces.\nSpaces can make a name more meaningful, but since spaces are used to separate arguments on the command line it is better to avoid them in names of files and directories. You can use - or _ instead (e.g. north-pacific-gyre/ rather than north pacific gyre/). To test this out, try typing mkdir north pacific gyre and see what directory (or directories!) are made when you check with ls -F.\nDon’t begin the name with - (dash).\nCommands treat names starting with - as options.\nStick with letters, numbers, . (period or ‘full stop’), - (dash) and _ (underscore).\nMany other characters have special meanings on the command line. We will learn about some of these during this lesson. There are special characters that can cause your command to not work as expected and can even result in data loss.\nIf you need to refer to names of files or directories that have spaces or other special characters, you should surround the name in single quotes (’’).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#create-a-text-file",
+    "href": "3_Working_With_Files_and_Directories.html#create-a-text-file",
+    "title": "3  Working With Files and Directories",
+    "section": "3.3 Create a text file",
+    "text": "3.3 Create a text file\nLet’s change our working directory to thesis using cd, then run a text editor called Nano to create a file called draft.txt:\ncd thesis\nnano draft.txt\nLet’s type in a few lines of text.\n\nOnce we’re happy with our text, we can press Ctrl+O (press the Ctrl or Control key and, while holding it down, press the O key) to write our data to disk. We will be asked to provide a name for the file that will contain our text. Press Return to accept the suggested default of draft.txt.\nOnce our file is saved, we can use Ctrl+X to quit the editor and return to the shell.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#viewing-files-in-the-terminal",
+    "href": "3_Working_With_Files_and_Directories.html#viewing-files-in-the-terminal",
+    "title": "3  Working With Files and Directories",
+    "section": "3.4 Viewing Files in the Terminal",
+    "text": "3.4 Viewing Files in the Terminal\nWhen working with files in the terminal, several commands can help you view their contents efficiently. Here, we will discuss cat, head, tail, less, and more, highlighting their uses and differences.\n\n3.4.1 cat\nThe cat command (short for “concatenate”) is used to display the contents of a file. It is best suited for small files because it outputs the entire content to the terminal.\n\n3.4.1.1 Example:\ncat filename.txt\nThis command will display the entire content of filename.txt.\n\n\n\n3.4.2 head\nThe head command displays the first few lines of a file. By default, it shows the first 10 lines, but you can specify a different number of lines with the -n option.\n\n3.4.2.1 Example:\nhead filename.txt\nhead -n 20 filename.txt\nThe first command shows the first 10 lines of filename.txt, while the second command shows the first 20 lines.\n\n\n\n3.4.3 tail\nThe tail command displays the last few lines of a file. By default, it shows the last 10 lines, but you can specify a different number of lines with the -n option.\n\n3.4.3.1 Example:\ntail filename.txt\ntail -n 20 filename.txt\nThe first command shows the last 10 lines of filename.txt, while the second command shows the last 20 lines.\n\n\n\n3.4.4 less\nThe less command is a pager that allows you to view the contents of a file one screen at a time. It is particularly useful for large files, as it does not load the entire file into memory at once.\n\n3.4.4.1 Example:\nless filename.txt\nUse the arrow keys to scroll through the file. Press q to quit and return to the terminal.\n\n\n\n3.4.5 more\nThe more command is another pager similar to less. It allows you to view the contents of a file one screen at a time. However, more is less powerful and flexible than less.\n\n3.4.5.1 Example:\nmore filename.txt\nUse the spacebar to scroll down one screen at a time. Press q to quit.\n\n\n\n3.4.6 Difference Between cat and less/more\n\ncat: Displays the entire content of a file at once. It is useful for small files but can be overwhelming for large files since all content is outputted at once.\nless/more: Both are pagers that display one screen of content at a time, making them more suitable for large files. less is generally preferred over more because it provides more features, such as backward navigation and better performance.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#moving-files-and-directories",
+    "href": "3_Working_With_Files_and_Directories.html#moving-files-and-directories",
+    "title": "3  Working With Files and Directories",
+    "section": "3.5 Moving files and directories",
+    "text": "3.5 Moving files and directories\nIn our thesis directory we have a file draft.txt which isn’t a particularly informative name, so let’s change the file’s name using mv, which is short for ‘move’:\nmv thesis/draft.txt thesis/quotes.txt\nThe first argument tells mv what we’re ‘moving’, while the second is where it’s to go. In this case, we’re moving thesis/draft.txt to thesis/quotes.txt, which has the same effect as renaming the file. Sure enough, ls shows us that thesis now contains one file called quotes.txt:\nls thesis\nOne must be careful when specifying the target file name, since mv will silently overwrite any existing file with the same name, which could lead to data loss. By default, mv will not ask for confirmation before overwriting files. However, an additional option, mv -i (or mv --interactive), will cause mv to request such confirmation.\nNote that mv also works on directories.\nLet’s move quotes.txt into the current working directory. We use mv once again, but this time we’ll use just the name of a directory as the second argument to tell mv that we want to keep the filename but put the file somewhere new. (This is why the command is called ‘move’.) In this case, the directory name we use is the special directory name . that we mentioned earlier.\nmv thesis/quotes.txt .",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#copying-files-and-directories",
+    "href": "3_Working_With_Files_and_Directories.html#copying-files-and-directories",
+    "title": "3  Working With Files and Directories",
+    "section": "3.6 Copying files and directories",
+    "text": "3.6 Copying files and directories\nThe cp command works very much like mv, except it copies a file instead of moving it. We can check that it did the right thing using ls with two paths as arguments — like most Unix commands, ls can be given multiple paths at once:\ncp quotes.txt thesis/quotations.txt\nls quotes.txt thesis/quotations.txt\nWe can also copy a directory and all its contents by using the recursive option -r, e.g. to back up a directory:\ncp -r thesis thesis_backup\nWe can check the result by listing the contents of both the thesis and thesis_backup directory:\n$ ls thesis thesis_backup\nIt is important to include the -r flag. If you want to copy a directory and you omit this option you will see a message that the directory has been omitted because -r not specified.\n$ cp thesis thesis_backup\ncp: -r not specified; omitting directory 'thesis'",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#removing-files-and-directories",
+    "href": "3_Working_With_Files_and_Directories.html#removing-files-and-directories",
+    "title": "3  Working With Files and Directories",
+    "section": "3.7 Removing files and directories",
+    "text": "3.7 Removing files and directories\nReturning to the shell-lesson-data/exercise-data/writing directory, let’s tidy up this directory by removing the quotes.txt file we created. The Unix command we’ll use for this is rm (short for ‘remove’):\nrm quotes.txt\nWe can confirm the file has gone using ls:\nls quotes.txt\n\n\n\n\n\n\nDeleting Is Forever\n\n\n\nThe Unix shell doesn’t have a trash bin that we can recover deleted files from (though most graphical interfaces to Unix do). Instead, when we delete files, they are unlinked from the file system so that their storage space on disk can be recycled. Tools for finding and recovering deleted files do exist, but there’s no guarantee they’ll work in any particular situation, since the computer may recycle the file’s disk space right away.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#using-rm-safely",
+    "href": "3_Working_With_Files_and_Directories.html#using-rm-safely",
+    "title": "3  Working With Files and Directories",
+    "section": "3.8 Using rm Safely",
+    "text": "3.8 Using rm Safely\nWhat happens when we execute rm -i thesis_backup/quotations.txt? Why would we want this protection when using rm?\n\nSolution (Solution). \nrm: remove regular file 'thesis_backup/quotations.txt'? y\nThe -i option will prompt before (every) removal (use Y to confirm deletion or N to keep the file). The Unix shell doesn’t have a trash bin, so all the files removed will disappear forever. By using the -i option, we have the chance to check that we are deleting only the files that we want to remove.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#using-wildcards-for-accessing-multiple-files-at-once",
+    "href": "3_Working_With_Files_and_Directories.html#using-wildcards-for-accessing-multiple-files-at-once",
+    "title": "3  Working With Files and Directories",
+    "section": "3.9 Using Wildcards for Accessing Multiple Files at Once",
+    "text": "3.9 Using Wildcards for Accessing Multiple Files at Once\nWildcards are special characters that allow you to access multiple files at once. They are particularly useful for handling groups of files without needing to list each one individually.\n\n3.9.1 The Asterisk (*)\nThe * wildcard represents zero or more characters. For example, in the shell-lesson-data/exercise-data/alkanes directory:\n\n*.pdb matches all files ending with .pdb, such as ethane.pdb, propane.pdb, and any other files with the .pdb extension.\np*.pdb matches files starting with the letter p and ending with .pdb, such as pentane.pdb and propane.pdb.\n\ncd ../mamun/shell-lesson-data/exercise-data/alkanes/\nls *.pdb\nThis command lists all .pdb files in the current directory. If you use:\nls p*.pdb\nIt lists only .pdb files that start with p.\n\n\n3.9.2 The Question Mark (?)\nThe ? wildcard represents exactly one character. For example:\n\n?ethane.pdb could match methane.pdb but not ethane.pdb, because ? represents exactly one character.\n*ethane.pdb matches both ethane.pdb and methane.pdb, as the * can represent zero or more characters.\n\n\n\n3.9.3 Combining Wildcards\nWildcards can be combined for more specific patterns. For example:\n\n???ane.pdb matches files with exactly three characters followed by ane.pdb, such as cubane.pdb, ethane.pdb, and octane.pdb.\n\n\n\n3.9.4 Handling Non-Matching Wildcards\nIf a wildcard pattern does not match any files, the shell passes the pattern as it is to the command, which can result in an error. For example, if you type:\nls *.pdf\nin a directory containing only .pdb files, you will receive an error stating that no such file or directory exists.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "3_Working_With_Files_and_Directories.html#summary",
+    "href": "3_Working_With_Files_and_Directories.html#summary",
+    "title": "3  Working With Files and Directories",
+    "section": "3.10 Summary",
+    "text": "3.10 Summary\n\ncp [old] [new] copies a file.\nmkdir [path] creates a new directory.\nmv [old] [new] moves (renames) a file or directory.\nrm [path] removes (deletes) a file.\ncat: Use for small files to quickly view the entire content.\nhead: Use to view the beginning of a file.\ntail: Use to view the end of a file.\nless: Use for large files to navigate through content efficiently.\nmore: Similar to less, but with fewer features.\n* matches zero or more characters in a filename, so *.txt matches all files ending in .txt.\n? matches any single character in a filename, so ?.txt matches a.txt but not any.txt.\nUse of the Control key may be described in many ways, including Ctrl-X, Control-X, and ^X.\nThe shell does not have a trash bin: once something is deleted, it’s really gone.\nMost files’ names are something.extension. The extension isn’t required, and doesn’t guarantee anything, but is normally used to indicate the type of data in the file.\nDepending on the type of work you do, you may need a more powerful text editor than Nano.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Working With Files and Directories</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html",
+    "href": "4_Pipes_and_Filters.html",
+    "title": "4  Pipes and Filters",
+    "section": "",
+    "text": "4.1 wc ‘word count’ command\nwc is the ‘word count’ command: it counts the number of lines, words, and characters in files (returning the values in that order from left to right).\nLet’s run an example command:\nIf we run the command wc *.pdb, the * in *.pdb matches zero or more characters, so the shell turns *.pdb into a list of all .pdb files in the current directory:\nNote that wc *.pdb also shows the total number of all lines in the last line of the output.\nIf we run wc -l instead of just wc, the output shows only the number of lines per file:\nThe -m and -w options can also be used with the wc command to show only the number of characters or the number of words, respectively.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#wc-word-count-command",
+    "href": "4_Pipes_and_Filters.html#wc-word-count-command",
+    "title": "4  Pipes and Filters",
+    "section": "",
+    "text": "wc cubane.pdb\n\nwc *.pdb\n\n\nwc -l *.pdb\n\n\n\n\n\n\n\nWhy Isn’t It Doing Anything?\n\n\n\nWhat happens if a command is supposed to process a file, but we don’t give it a filename? For example, what if we type:\n$ wc -l\nbut don’t type *.pdb (or anything else) after the command? Since it doesn’t have any filenames, wc assumes it is supposed to process input given at the command prompt, so it just sits there and waits for us to give it some data interactively. From the outside, though, all we see is it sitting there, and the command doesn’t appear to do anything.\nIf you make this kind of mistake, you can escape out of this state by holding down the control key (Ctrl) and pressing the letter C once: Ctrl+C. Then release both keys.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#capturing-output-from-commands",
+    "href": "4_Pipes_and_Filters.html#capturing-output-from-commands",
+    "title": "4  Pipes and Filters",
+    "section": "4.2 Capturing output from commands",
+    "text": "4.2 Capturing output from commands\nWhich of these files contains the fewest lines? It’s an easy question to answer when there are only six files, but what if there were 6000? Our first step toward a solution is to run the command:\n$ wc -l *.pdb &gt; lengths.txt\nThe greater than symbol, &gt;, tells the shell to redirect the command’s output to a file instead of printing it to the screen. This command prints no screen output, because everything that wc would have printed has gone into the file lengths.txt instead. If the file doesn’t exist prior to issuing the command, the shell will create the file. If the file exists already, it will be silently overwritten, which may lead to data loss. Thus, redirect commands require caution.\nls lengths.txt confirms that the file exists:\n$ ls lengths.txt\nWe can now send the content of lengths.txt to the screen using cat lengths.txt. The cat command gets its name from ‘concatenate’ i.e. join together, and it prints the contents of files one after another. There’s only one file in this case, so cat just shows us what it contains:\n$ cat lengths.txt",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#filtering-output",
+    "href": "4_Pipes_and_Filters.html#filtering-output",
+    "title": "4  Pipes and Filters",
+    "section": "4.3 Filtering output",
+    "text": "4.3 Filtering output\nNext we’ll use the sort command to sort the contents of the lengths.txt file. But first we’ll do an exercise to learn a little about the sort command:\n\n4.3.1 What Does sort -n Do?\nThe file shell-lesson-data/exercise-data/numbers.txt contains some lines with numbers:\nsort ../numbers.txt\n\nsort - ../numbers.txt\nThe -n option specifies a numerical rather than an alphanumerical sort.\nWe will also use the -n option to specify that the sort is numerical instead of alphanumerical. This does not change the file; instead, it sends the sorted result to the screen:\nsort -n lengths.txt\nWe can put the sorted list of lines in another temporary file called sorted-lengths.txt by putting &gt; sorted-lengths.txt after the command, just as we used &gt; lengths.txt to put the output of wc into lengths.txt. Once we’ve done that, we can run another command called head to get the first few lines in sorted-lengths.txt:\nsort -n lengths.txt &gt; sorted-lengths.txt\nhead -n 1 sorted-lengths.txt\nUsing -n 1 with head tells it that we only want the first line of the file; -n 20 would get the first 20, and so on. Since sorted-lengths.txt contains the lengths of our files ordered from least to greatest, the output of head must be the file with the fewest lines",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#the-operator",
+    "href": "4_Pipes_and_Filters.html#the-operator",
+    "title": "4  Pipes and Filters",
+    "section": "4.4 The >> operator",
+    "text": "4.4 The &gt;&gt; operator\n\n4.4.1 Using &gt;&gt; in Bash Commands\nIn Bash, the &gt;&gt; operator is used to append the output of a command to a file. If the file does not already exist, it will be created. This operator is particularly useful when you want to add content to the end of an existing file without overwriting its current content.\n\n\n4.4.2 Syntax\ncommand &gt;&gt; filename\n\ncommand: The command whose output you want to append.\nfilename: The file to which the output will be appended.\n\n\n\n4.4.3 Example\nConsider you have a file named logfile.txt and you want to append the current date and time to it each time a certain script runs.\n\n4.4.3.1 Step 1: Create or check the initial content of logfile.txt\necho \"Initial log entry\" &gt; logfile.txt\ncat logfile.txt\n\n\n4.4.3.2 Step 2: Append the date and time to logfile.txt\ndate &gt;&gt; logfile.txt\n\n\n4.4.3.3 Step 3: Check the updated content of logfile.txt\ncat logfile.txt\n\n\n\n4.4.4 Multiple Appends\nYou can use the &gt;&gt; operator multiple times to append different outputs to the same file. For example:\necho \"First append\" &gt;&gt; logfile.txt\necho \"Second append\" &gt;&gt; logfile.txt",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#passing-output-to-another-command",
+    "href": "4_Pipes_and_Filters.html#passing-output-to-another-command",
+    "title": "4  Pipes and Filters",
+    "section": "4.5 Passing output to another command",
+    "text": "4.5 Passing output to another command\nIn our example of finding the file with the fewest lines, we are using two intermediate files lengths.txt and sorted-lengths.txt to store output. This is a confusing way to work because even once you understand what wc, sort, and head do, those intermediate files make it hard to follow what’s going on. We can make it easier to understand by running sort and head together:\n$ sort -n lengths.txt | head -n 1\n  9  methane.pdb\nThe vertical bar, |, between the two commands is called a pipe. It tells the shell that we want to use the output of the command on the left as the input to the command on the right.\nThis has removed the need for the sorted-lengths.txt file.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#combining-multiple-commands",
+    "href": "4_Pipes_and_Filters.html#combining-multiple-commands",
+    "title": "4  Pipes and Filters",
+    "section": "4.6 Combining multiple commands",
+    "text": "4.6 Combining multiple commands\nNothing prevents us from chaining pipes consecutively. We can for example send the output of wc directly to sort, and then send the resulting output to head. This removes the need for any intermediate files.\nWe’ll start by using a pipe to send the output of wc to sort:\n$ wc -l *.pdb | sort -n\n   9 methane.pdb\n  12 ethane.pdb\n  15 propane.pdb\n  20 cubane.pdb\n  21 pentane.pdb\n  30 octane.pdb\n 107 total\nWe can then send that output through another pipe, to head, so that the full pipeline becomes:\n$ wc -l *.pdb | sort -n | head -n 1\n   9  methane.pdb\nThis is exactly like a mathematician nesting functions like log(3x) and saying ‘the log of three times x’. In our case, the algorithm is ‘head of sort of line count of *.pdb’.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  },
+  {
+    "objectID": "4_Pipes_and_Filters.html#summary",
+    "href": "4_Pipes_and_Filters.html#summary",
+    "title": "4  Pipes and Filters",
+    "section": "4.7 Summary",
+    "text": "4.7 Summary\n\nwc counts lines, words, and characters in its inputs.\ncat displays the contents of its inputs.\nsort sorts its inputs.\nhead displays the first 10 lines of its input.\ntail displays the last 10 lines of its input.\ncommand &gt; [file] redirects a command’s output to a file (overwriting any existing content).\ncommand &gt;&gt; [file] appends a command’s output to a file.\n[first] | [second] is a pipeline: the output of the first command is used as the input to the second.\nThe best way to use the shell is to use pipes to combine simple single-purpose programs (filters).",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Pipes and Filters</span>"
+    ]
+  }
+]
