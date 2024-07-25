@@ -8,7 +8,7 @@
 
 <meta name="author" content="Hawlader Al-Mamun">
 
-<title>Introduction to BASH and Sequence Analysis - 1&nbsp; Introducing the Shell</title>
+<title>Introduction to BASH and Sequence Analysis - 6&nbsp; How do you copy to and from the remote computer?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./2_Navigating_Files_and_Directories.html" rel="next">
-<link href="./First_Time_Accessing_the_Server.html" rel="prev">
+<link href="./7_bioinformatics_workflow.html" rel="next">
+<link href="./5_loops.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_Introducing_the_Shell.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./6_How_2_copy.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How do you copy to and from the remote computer?</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1_Introducing_the_Shell.html" class="sidebar-item-text sidebar-link active">
+  <a href="./1_Introducing_the_Shell.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></span></a>
   </div>
 </li>
@@ -185,7 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./6_How_2_copy.html" class="sidebar-item-text sidebar-link">
+  <a href="./6_How_2_copy.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How do you copy to and from the remote computer?</span></span></a>
   </div>
 </li>
@@ -217,22 +217,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#accessing-the-server" id="toc-accessing-the-server" class="nav-link active" data-scroll-target="#accessing-the-server"><span class="header-section-number">1.1</span> Accessing the Server</a>
+  <li><a href="#how-do-you-copy-to-and-from-the-remote-computer" id="toc-how-do-you-copy-to-and-from-the-remote-computer" class="nav-link active" data-scroll-target="#how-do-you-copy-to-and-from-the-remote-computer"><span class="header-section-number">6.1</span> How Do You Copy To and From the Remote Computer?</a>
   <ul class="collapse">
-  <li><a href="#using-the-ssh-command" id="toc-using-the-ssh-command" class="nav-link" data-scroll-target="#using-the-ssh-command"><span class="header-section-number">1.1.1</span> Using the SSH Command</a></li>
-  <li><a href="#what-is-a-shell" id="toc-what-is-a-shell" class="nav-link" data-scroll-target="#what-is-a-shell"><span class="header-section-number">1.1.2</span> What is a Shell?</a></li>
-  <li><a href="#why-use-the-shell" id="toc-why-use-the-shell" class="nav-link" data-scroll-target="#why-use-the-shell"><span class="header-section-number">1.1.3</span> Why Use the Shell?</a></li>
-  <li><a href="#the-shell-prompt" id="toc-the-shell-prompt" class="nav-link" data-scroll-target="#the-shell-prompt"><span class="header-section-number">1.1.4</span> The Shell Prompt</a></li>
+  <li><a href="#using-scp-secure-copy" id="toc-using-scp-secure-copy" class="nav-link" data-scroll-target="#using-scp-secure-copy"><span class="header-section-number">6.1.1</span> Using <code>scp</code> (Secure Copy)</a></li>
+  <li><a href="#using-rsync" id="toc-using-rsync" class="nav-link" data-scroll-target="#using-rsync"><span class="header-section-number">6.1.2</span> Using <code>rsync</code></a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.1.3</span> Summary</a></li>
   </ul></li>
-  <li><a href="#understanding-directories" id="toc-understanding-directories" class="nav-link" data-scroll-target="#understanding-directories"><span class="header-section-number">1.2</span> Understanding Directories</a>
-  <ul class="collapse">
-  <li><a href="#home-directory" id="toc-home-directory" class="nav-link" data-scroll-target="#home-directory"><span class="header-section-number">1.2.1</span> Home Directory</a></li>
-  <li><a href="#scratch-directory" id="toc-scratch-directory" class="nav-link" data-scroll-target="#scratch-directory"><span class="header-section-number">1.2.2</span> Scratch Directory</a></li>
-  <li><a href="#working-directory" id="toc-working-directory" class="nav-link" data-scroll-target="#working-directory"><span class="header-section-number">1.2.3</span> Working Directory</a></li>
-  <li><a href="#navigating-directories" id="toc-navigating-directories" class="nav-link" data-scroll-target="#navigating-directories"><span class="header-section-number">1.2.4</span> Navigating Directories</a></li>
-  <li><a href="#listing-the-files-in-the-current-directory" id="toc-listing-the-files-in-the-current-directory" class="nav-link" data-scroll-target="#listing-the-files-in-the-current-directory"><span class="header-section-number">1.2.5</span> Listing the files in the current directory</a></li>
-  </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">1.3</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How do you copy to and from the remote computer?</span></h1>
 </div>
 
 
@@ -264,129 +254,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="accessing-the-server" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="accessing-the-server"><span class="header-section-number">1.1</span> Accessing the Server</h2>
-<p>Each student will be provided with a unique user ID (e.g., s-1, s-2, s-3) and the server’s IP address. To access the server, you will use the <code>ssh</code> (Secure Shell) command. SSH allows you to securely connect to the server and interact with it via the command line.</p>
-<section id="using-the-ssh-command" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="using-the-ssh-command"><span class="header-section-number">1.1.1</span> Using the SSH Command</h3>
-<ol type="1">
-<li><strong>Open VS Code Terminal:</strong>
+<section id="how-do-you-copy-to-and-from-the-remote-computer" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="how-do-you-copy-to-and-from-the-remote-computer"><span class="header-section-number">6.1</span> How Do You Copy To and From the Remote Computer?</h2>
+<p>Copying files to and from a remote computer is a common task when working with servers or collaborating with others over a network. In Bash, you can use several tools to accomplish this, with <code>scp</code> (secure copy) and <code>rsync</code> being the most commonly used commands.</p>
+<section id="using-scp-secure-copy" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="using-scp-secure-copy"><span class="header-section-number">6.1.1</span> Using <code>scp</code> (Secure Copy)</h3>
+<p>The <code>scp</code> command allows you to securely transfer files between your local machine and a remote machine using SSH (Secure Shell). It can also be used to transfer files between two remote machines.</p>
+<section id="copying-a-file-from-local-to-remote" class="level4" data-number="6.1.1.1">
+<h4 data-number="6.1.1.1" class="anchored" data-anchor-id="copying-a-file-from-local-to-remote"><span class="header-section-number">6.1.1.1</span> Copying a File from Local to Remote</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> localfile.txt username@remotehost:/path/to/remote/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li>Launch Visual Studio Code.</li>
-<li>Open the integrated terminal by pressing <code>Ctrl +</code> (backtick) or navigating to <strong>Terminal &gt; New Terminal</strong> or <strong>View &gt; Terminal</strong> (depending on VS Code version) from the menu.</li>
-</ul></li>
-</ol>
-<p><img src="img/newTerminal.png" class="img-fluid"></p>
-<ol start="2" type="1">
-<li><strong>Connect to the Server:</strong>
-<ul>
-<li><p>In the terminal, type the following command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> your_user_id@server_ip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Replace <code>your_user_id</code> with your assigned user ID (e.g., s-1) and <code>server_ip</code> with the provided IP address of the server.</p></li>
-<li><p>Press Enter.</p></li>
-</ul></li>
-<li><strong>Enter Your Password:</strong>
-<ul>
-<li>You will be prompted to enter your password. Note that in Linux, when you type your password, nothing will be displayed on the screen (no asterisks or dots) for security reasons. This is different from Windows, where you typically see asterisks.</li>
-</ul></li>
-<li><strong>Successful Connection:</strong>
-<ul>
-<li>If your credentials are correct, you will be logged into the server and see a welcome message or command prompt.</li>
-</ul></li>
-</ol>
-<p><img src="img/FirstLogin.png" class="img-fluid"></p>
-</section>
-<section id="what-is-a-shell" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="what-is-a-shell"><span class="header-section-number">1.1.2</span> What is a Shell?</h3>
-<p>A shell is a command-line interface (CLI) that allows users to interact with the operating system by typing commands. It acts as an intermediary between the user and the kernel, interpreting and executing commands entered by the user. The shell is a powerful tool for managing files, running programs, and automating tasks through scripts.</p>
-</section>
-<section id="why-use-the-shell" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="why-use-the-shell"><span class="header-section-number">1.1.3</span> Why Use the Shell?</h3>
-<ol type="1">
-<li><strong>Efficiency</strong>: The shell allows users to perform complex tasks with simple commands, which can be more efficient than using a graphical user interface (GUI).</li>
-<li><strong>Automation</strong>: With the shell, users can write scripts to automate repetitive tasks, saving time and reducing errors.</li>
-<li><strong>Flexibility</strong>: The shell provides access to a wide range of tools and utilities, making it versatile for different types of tasks.</li>
-<li><strong>Control</strong>: Advanced users can have more control over the system and its processes compared to using a GUI.</li>
-</ol>
-</section>
-<section id="the-shell-prompt" class="level3" data-number="1.1.4">
-<h3 data-number="1.1.4" class="anchored" data-anchor-id="the-shell-prompt"><span class="header-section-number">1.1.4</span> The Shell Prompt</h3>
-<p>When you open a terminal window, you will see a shell prompt. This prompt indicates that the shell is ready to accept commands. The prompt usually looks something like this:</p>
-<pre class="shell"><code>username@hostname:~$</code></pre>
-<p>Here’s a breakdown of the components:</p>
-<ul>
-<li><code>username</code>: Your user name on the system.</li>
-<li><code>hostname</code>: The name of the computer or server.</li>
-<li><code>~</code>: The current directory (in this case, <code>~</code> represents the home directory).</li>
-<li><code>$</code>: The prompt symbol for a standard user (it changes to <code>#</code> for the root user).</li>
+<li><strong>localfile.txt</strong>: The file you want to copy from your local machine.</li>
+<li><strong>username</strong>: Your username on the remote machine.</li>
+<li><strong>remotehost</strong>: The IP address or hostname of the remote machine.</li>
+<li><strong>/path/to/remote/directory</strong>: The directory on the remote machine where you want to copy the file.</li>
 </ul>
 </section>
+<section id="example" class="level4" data-number="6.1.1.2">
+<h4 data-number="6.1.1.2" class="anchored" data-anchor-id="example"><span class="header-section-number">6.1.1.2</span> Example:</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> howToCopy.txt s-99@192.1xx.xxx.xxx:/mnt/s-ws/s-99/thesis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="understanding-directories" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="understanding-directories"><span class="header-section-number">1.2</span> Understanding Directories</h2>
-<section id="home-directory" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="home-directory"><span class="header-section-number">1.2.1</span> Home Directory</h3>
-<p>Upon logging in, you will be in your home directory, usually located at <code>/home/your_user_id</code>. This directory is your personal space on the server. However, the home directory is usually very small and should not be used for extensive work or large data storage.</p>
-</section>
-<section id="scratch-directory" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="scratch-directory"><span class="header-section-number">1.2.2</span> Scratch Directory</h3>
-<p>The <code>/scratch</code> directory (or similar) is a designated area for temporary storage of large files and data processing. This space is typically much larger than your home directory and is intended for heavy computational tasks.</p>
-</section>
-<section id="working-directory" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="working-directory"><span class="header-section-number">1.2.3</span> Working Directory</h3>
-<p>For our course, you will use <code>/mnt/s-ws/your_user_id</code> as your working directory. This directory provides ample space for your projects and assignments.</p>
-</section>
-<section id="navigating-directories" class="level3" data-number="1.2.4">
-<h3 data-number="1.2.4" class="anchored" data-anchor-id="navigating-directories"><span class="header-section-number">1.2.4</span> Navigating Directories</h3>
+<section id="copying-a-file-from-remote-to-local" class="level4" data-number="6.1.1.3">
+<h4 data-number="6.1.1.3" class="anchored" data-anchor-id="copying-a-file-from-remote-to-local"><span class="header-section-number">6.1.1.3</span> Copying a File from Remote to Local</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@remotehost:/path/to/remotefile.txt /path/to/local/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li><strong>Who Am I? (<code>whoami</code>):</strong>
-<ul>
-<li><p>This command prints your current user ID.</p></li>
-<li><p>Usage:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-<li><strong>Print Working Directory (<code>pwd</code>):</strong>
-<ul>
-<li><p>This command displays the full path of your current directory.</p></li>
-<li><p>Usage:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-<li><strong>Change Directory (<code>cd</code>):</strong>
-<ul>
-<li><p>Use the <code>cd</code> command to navigate to your working directory.</p></li>
-<li><p>Example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /mnt/s-ws/your_user_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
+<li><strong>/path/to/remotefile.txt</strong>: The file you want to copy from the remote machine.</li>
+<li><strong>/path/to/local/directory</strong>: The directory on your local machine where you want to save the file.</li>
 </ul>
 </section>
-<section id="listing-the-files-in-the-current-directory" class="level3" data-number="1.2.5">
-<h3 data-number="1.2.5" class="anchored" data-anchor-id="listing-the-files-in-the-current-directory"><span class="header-section-number">1.2.5</span> Listing the files in the current directory</h3>
-<ul>
-<li><strong>ls will list of the contents of the current directory</strong>
-<ul>
-<li>Example:</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><strong>Command not found</strong>
-<ul>
-<li>If the shell can’t find a program whose name is the command you typed, it will print an error message such as:</li>
-</ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul>
+<section id="example-1" class="level4" data-number="6.1.1.4">
+<h4 data-number="6.1.1.4" class="anchored" data-anchor-id="example-1"><span class="header-section-number">6.1.1.4</span> Example:</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> s-99@192.1xx.xxx.xxx:/mnt/s-ws/s-99/thesis/my_draft.txt .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="summary" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">1.3</span> Summary</h2>
-<p>By following these steps, you will be able to access the server and navigate the directories effectively. Here’s a quick summary:</p>
-<ol type="1">
-<li><strong>Use SSH to connect to the server.</strong></li>
-<li><strong>Enter your password (nothing will be shown as you type).</strong></li>
-<li><strong>Understand the purpose of the home directory and <code>/scratch</code>.</strong></li>
-<li><strong>Use <code>/mnt/s-ws/your_user_id</code> as your working directory.</strong></li>
-<li><strong>Learn basic commands (<code>whoami</code>, <code>pwd</code>, <code>ls</code>) and use Tab for auto-completion.</strong></li>
-</ol>
+<section id="using-rsync" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="using-rsync"><span class="header-section-number">6.1.2</span> Using <code>rsync</code></h3>
+<p>The <code>rsync</code> command is a powerful tool for copying and synchronizing files and directories between two locations over a network. It is more efficient than <code>scp</code> for large data transfers or regular backups because it only copies the differences between the source and the destination.</p>
+<section id="basic-rsync-command" class="level4" data-number="6.1.2.1">
+<h4 data-number="6.1.2.1" class="anchored" data-anchor-id="basic-rsync-command"><span class="header-section-number">6.1.2.1</span> Basic <code>rsync</code> Command</h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span>  /path/to/local/directory/ username@remotehost:/path/to/remote/directory/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-2" class="level4" data-number="6.1.2.2">
+<h4 data-number="6.1.2.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">6.1.2.2</span> Example:</h4>
+<p>Copying a directory from local to remote:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span>  howToCipy.txt mamun@146.1xx.xx.xx:/mnt/s-ws/mamun/thesis/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Copying files and directory from remote to local:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span>   mamun@146.1xx.xx.xx:/mnt/s-ws/mamun/thesis/my_draft.txt .</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span>   mamun@146.1xx.xx.xx:/mnt/s-ws/mamun/thesis .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="summary" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.1.3</span> Summary</h3>
+<ul>
+<li><strong><code>scp</code></strong>: Simple and straightforward for copying files between local and remote machines. Best for one-time transfers.</li>
+<li><strong><code>rsync</code></strong>: More efficient and powerful for synchronizing files and directories, especially useful for regular backups and large data sets.</li>
+</ul>
+<p>Both <code>scp</code> and <code>rsync</code> rely on SSH for secure data transfer, ensuring that your files are copied safely over the network. Choose the tool that best fits your needs based on the complexity and frequency of your file transfer tasks.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -801,13 +728,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./First_Time_Accessing_the_Server.html" class="pagination-link" aria-label="First Time Accessing the Server">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">First Time Accessing the Server</span>
+      <a href="./5_loops.html" class="pagination-link" aria-label="Loops">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Loops</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./2_Navigating_Files_and_Directories.html" class="pagination-link" aria-label="Navigating Files and Directories">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Navigating Files and Directories</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./7_bioinformatics_workflow.html" class="pagination-link" aria-label="A typical bioinformatics workflow">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

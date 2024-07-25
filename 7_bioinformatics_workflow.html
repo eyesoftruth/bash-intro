@@ -8,7 +8,7 @@
 
 <meta name="author" content="Hawlader Al-Mamun">
 
-<title>Introduction to BASH and Sequence Analysis - 1&nbsp; Introducing the Shell</title>
+<title>Introduction to BASH and Sequence Analysis - 7&nbsp; A typical bioinformatics workflow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,8 +31,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./2_Navigating_Files_and_Directories.html" rel="next">
-<link href="./First_Time_Accessing_the_Server.html" rel="prev">
+<link href="./7_seq_to_Alignment.html" rel="next">
+<link href="./6_How_2_copy.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_Introducing_the_Shell.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./7_bioinformatics_workflow.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -155,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1_Introducing_the_Shell.html" class="sidebar-item-text sidebar-link active">
+  <a href="./1_Introducing_the_Shell.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></span></a>
   </div>
 </li>
@@ -191,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./7_bioinformatics_workflow.html" class="sidebar-item-text sidebar-link">
+  <a href="./7_bioinformatics_workflow.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></span></a>
   </div>
 </li>
@@ -217,22 +183,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#accessing-the-server" id="toc-accessing-the-server" class="nav-link active" data-scroll-target="#accessing-the-server"><span class="header-section-number">1.1</span> Accessing the Server</a>
+  <li><a href="#scenario-improving-drought-resistance-in-wheat" id="toc-scenario-improving-drought-resistance-in-wheat" class="nav-link active" data-scroll-target="#scenario-improving-drought-resistance-in-wheat">Scenario: Improving Drought Resistance in Wheat</a>
   <ul class="collapse">
-  <li><a href="#using-the-ssh-command" id="toc-using-the-ssh-command" class="nav-link" data-scroll-target="#using-the-ssh-command"><span class="header-section-number">1.1.1</span> Using the SSH Command</a></li>
-  <li><a href="#what-is-a-shell" id="toc-what-is-a-shell" class="nav-link" data-scroll-target="#what-is-a-shell"><span class="header-section-number">1.1.2</span> What is a Shell?</a></li>
-  <li><a href="#why-use-the-shell" id="toc-why-use-the-shell" class="nav-link" data-scroll-target="#why-use-the-shell"><span class="header-section-number">1.1.3</span> Why Use the Shell?</a></li>
-  <li><a href="#the-shell-prompt" id="toc-the-shell-prompt" class="nav-link" data-scroll-target="#the-shell-prompt"><span class="header-section-number">1.1.4</span> The Shell Prompt</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#step-1-sample-collection" id="toc-step-1-sample-collection" class="nav-link" data-scroll-target="#step-1-sample-collection">Step 1: Sample Collection</a></li>
+  <li><a href="#step-2-dna-extraction-and-sequencing" id="toc-step-2-dna-extraction-and-sequencing" class="nav-link" data-scroll-target="#step-2-dna-extraction-and-sequencing">Step 2: DNA Extraction and Sequencing</a></li>
+  <li><a href="#step-3-quality-control" id="toc-step-3-quality-control" class="nav-link" data-scroll-target="#step-3-quality-control">Step 3: Quality Control</a></li>
+  <li><a href="#step-4-alignment-to-the-reference-genome" id="toc-step-4-alignment-to-the-reference-genome" class="nav-link" data-scroll-target="#step-4-alignment-to-the-reference-genome">Step 4: Alignment to the Reference Genome</a></li>
+  <li><a href="#step-5-variant-calling" id="toc-step-5-variant-calling" class="nav-link" data-scroll-target="#step-5-variant-calling">Step 5: Variant Calling</a></li>
+  <li><a href="#step-6-filtering-and-annotation" id="toc-step-6-filtering-and-annotation" class="nav-link" data-scroll-target="#step-6-filtering-and-annotation">Step 6: Filtering and Annotation</a></li>
+  <li><a href="#step-7-data-analysis" id="toc-step-7-data-analysis" class="nav-link" data-scroll-target="#step-7-data-analysis">Step 7: Data Analysis</a></li>
+  <li><a href="#step-8-validation-and-functional-studies" id="toc-step-8-validation-and-functional-studies" class="nav-link" data-scroll-target="#step-8-validation-and-functional-studies">Step 8: Validation and Functional Studies</a></li>
+  <li><a href="#outcome" id="toc-outcome" class="nav-link" data-scroll-target="#outcome">Outcome</a></li>
   </ul></li>
-  <li><a href="#understanding-directories" id="toc-understanding-directories" class="nav-link" data-scroll-target="#understanding-directories"><span class="header-section-number">1.2</span> Understanding Directories</a>
-  <ul class="collapse">
-  <li><a href="#home-directory" id="toc-home-directory" class="nav-link" data-scroll-target="#home-directory"><span class="header-section-number">1.2.1</span> Home Directory</a></li>
-  <li><a href="#scratch-directory" id="toc-scratch-directory" class="nav-link" data-scroll-target="#scratch-directory"><span class="header-section-number">1.2.2</span> Scratch Directory</a></li>
-  <li><a href="#working-directory" id="toc-working-directory" class="nav-link" data-scroll-target="#working-directory"><span class="header-section-number">1.2.3</span> Working Directory</a></li>
-  <li><a href="#navigating-directories" id="toc-navigating-directories" class="nav-link" data-scroll-target="#navigating-directories"><span class="header-section-number">1.2.4</span> Navigating Directories</a></li>
-  <li><a href="#listing-the-files-in-the-current-directory" id="toc-listing-the-files-in-the-current-directory" class="nav-link" data-scroll-target="#listing-the-files-in-the-current-directory"><span class="header-section-number">1.2.5</span> Listing the files in the current directory</a></li>
-  </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">1.3</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></h1>
 </div>
 
 
@@ -264,129 +227,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="accessing-the-server" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="accessing-the-server"><span class="header-section-number">1.1</span> Accessing the Server</h2>
-<p>Each student will be provided with a unique user ID (e.g., s-1, s-2, s-3) and the server’s IP address. To access the server, you will use the <code>ssh</code> (Secure Shell) command. SSH allows you to securely connect to the server and interact with it via the command line.</p>
-<section id="using-the-ssh-command" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="using-the-ssh-command"><span class="header-section-number">1.1.1</span> Using the SSH Command</h3>
-<ol type="1">
-<li><strong>Open VS Code Terminal:</strong>
-<ul>
-<li>Launch Visual Studio Code.</li>
-<li>Open the integrated terminal by pressing <code>Ctrl +</code> (backtick) or navigating to <strong>Terminal &gt; New Terminal</strong> or <strong>View &gt; Terminal</strong> (depending on VS Code version) from the menu.</li>
-</ul></li>
-</ol>
-<p><img src="img/newTerminal.png" class="img-fluid"></p>
-<ol start="2" type="1">
-<li><strong>Connect to the Server:</strong>
-<ul>
-<li><p>In the terminal, type the following command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> your_user_id@server_ip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Replace <code>your_user_id</code> with your assigned user ID (e.g., s-1) and <code>server_ip</code> with the provided IP address of the server.</p></li>
-<li><p>Press Enter.</p></li>
-</ul></li>
-<li><strong>Enter Your Password:</strong>
-<ul>
-<li>You will be prompted to enter your password. Note that in Linux, when you type your password, nothing will be displayed on the screen (no asterisks or dots) for security reasons. This is different from Windows, where you typically see asterisks.</li>
-</ul></li>
-<li><strong>Successful Connection:</strong>
-<ul>
-<li>If your credentials are correct, you will be logged into the server and see a welcome message or command prompt.</li>
-</ul></li>
-</ol>
-<p><img src="img/FirstLogin.png" class="img-fluid"></p>
+<section id="scenario-improving-drought-resistance-in-wheat" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="scenario-improving-drought-resistance-in-wheat">Scenario: Improving Drought Resistance in Wheat</h2>
+<section id="background" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="background">Background</h3>
+<p>You are a plant geneticist working at an agricultural research institute. Your team is focused on improving drought resistance in wheat, a staple crop increasingly affected by climate change. You aim to identify genetic variations that confer drought resistance to develop new, resilient wheat varieties.</p>
 </section>
-<section id="what-is-a-shell" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="what-is-a-shell"><span class="header-section-number">1.1.2</span> What is a Shell?</h3>
-<p>A shell is a command-line interface (CLI) that allows users to interact with the operating system by typing commands. It acts as an intermediary between the user and the kernel, interpreting and executing commands entered by the user. The shell is a powerful tool for managing files, running programs, and automating tasks through scripts.</p>
+<section id="step-1-sample-collection" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-1-sample-collection">Step 1: Sample Collection</h3>
+<p>You collect leaf samples from two sets of wheat plants: those that have shown high drought resistance (resistant group) and those that are sensitive to drought (sensitive group).</p>
+<p><img src="img/wheatleaf.jpg" class="img-fluid"></p>
 </section>
-<section id="why-use-the-shell" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="why-use-the-shell"><span class="header-section-number">1.1.3</span> Why Use the Shell?</h3>
-<ol type="1">
-<li><strong>Efficiency</strong>: The shell allows users to perform complex tasks with simple commands, which can be more efficient than using a graphical user interface (GUI).</li>
-<li><strong>Automation</strong>: With the shell, users can write scripts to automate repetitive tasks, saving time and reducing errors.</li>
-<li><strong>Flexibility</strong>: The shell provides access to a wide range of tools and utilities, making it versatile for different types of tasks.</li>
-<li><strong>Control</strong>: Advanced users can have more control over the system and its processes compared to using a GUI.</li>
-</ol>
+<section id="step-2-dna-extraction-and-sequencing" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-2-dna-extraction-and-sequencing">Step 2: DNA Extraction and Sequencing</h3>
+<p>In the lab, your team extracts DNA from the leaf samples. You then use a high-throughput sequencing platform (such as Illumina HiSeq) to sequence the genomes of both the resistant and sensitive wheat plants. This generates millions of short DNA reads.</p>
+<p><img src="img/HTassays.png" class="img-fluid"></p>
 </section>
-<section id="the-shell-prompt" class="level3" data-number="1.1.4">
-<h3 data-number="1.1.4" class="anchored" data-anchor-id="the-shell-prompt"><span class="header-section-number">1.1.4</span> The Shell Prompt</h3>
-<p>When you open a terminal window, you will see a shell prompt. This prompt indicates that the shell is ready to accept commands. The prompt usually looks something like this:</p>
-<pre class="shell"><code>username@hostname:~$</code></pre>
-<p>Here’s a breakdown of the components:</p>
-<ul>
-<li><code>username</code>: Your user name on the system.</li>
-<li><code>hostname</code>: The name of the computer or server.</li>
-<li><code>~</code>: The current directory (in this case, <code>~</code> represents the home directory).</li>
-<li><code>$</code>: The prompt symbol for a standard user (it changes to <code>#</code> for the root user).</li>
-</ul>
+<section id="step-3-quality-control" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-3-quality-control">Step 3: Quality Control</h3>
+<p>The raw sequencing data undergoes quality control checks to ensure high accuracy. Low-quality reads and adapter sequences are filtered out.</p>
+<p><img src="img/trimfilterreads.png" class="img-fluid"></p>
 </section>
+<section id="step-4-alignment-to-the-reference-genome" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-4-alignment-to-the-reference-genome">Step 4: Alignment to the Reference Genome</h3>
+<p>You use Bowtie2 to align the sequencing reads to the wheat reference genome (IWGSC RefSeq v1.0). This reference genome provides a standard framework for comparison.</p>
+<p><img src="img/seq_alignment.png" class="img-fluid"></p>
+<p>Bowtie2 maps each read to its most likely location on the wheat reference genome. This step helps in determining where each short sequence comes from within the genome.</p>
 </section>
-<section id="understanding-directories" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="understanding-directories"><span class="header-section-number">1.2</span> Understanding Directories</h2>
-<section id="home-directory" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="home-directory"><span class="header-section-number">1.2.1</span> Home Directory</h3>
-<p>Upon logging in, you will be in your home directory, usually located at <code>/home/your_user_id</code>. This directory is your personal space on the server. However, the home directory is usually very small and should not be used for extensive work or large data storage.</p>
+<section id="step-5-variant-calling" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-5-variant-calling">Step 5: Variant Calling</h3>
+<p>After alignment, you use variant calling software (such as GATK) to identify genetic differences between the resistant and sensitive groups compared to the reference genome. These differences include SNPs, insertions, and deletions.</p>
+<p><img src="img/varian_calling.png" class="img-fluid"></p>
 </section>
-<section id="scratch-directory" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="scratch-directory"><span class="header-section-number">1.2.2</span> Scratch Directory</h3>
-<p>The <code>/scratch</code> directory (or similar) is a designated area for temporary storage of large files and data processing. This space is typically much larger than your home directory and is intended for heavy computational tasks.</p>
+<section id="step-6-filtering-and-annotation" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-6-filtering-and-annotation">Step 6: Filtering and Annotation</h3>
+<p>Genome annotation is the process of identifying and marking the locations of genes and other functional elements within a genome sequence. It involves both structural and functional annotation.</p>
+<p>The identified variants are filtered to focus on those that are unique to the drought-resistant plants and potentially beneficial. You annotate these variants using databases like Ensembl Plants to predict their functional impact.</p>
 </section>
-<section id="working-directory" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="working-directory"><span class="header-section-number">1.2.3</span> Working Directory</h3>
-<p>For our course, you will use <code>/mnt/s-ws/your_user_id</code> as your working directory. This directory provides ample space for your projects and assignments.</p>
+<section id="step-7-data-analysis" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-7-data-analysis">Step 7: Data Analysis</h3>
+<p>You perform statistical analyses to compare the genetic profiles of the resistant and sensitive groups. You identify several candidate genes and mutations associated with drought resistance.</p>
 </section>
-<section id="navigating-directories" class="level3" data-number="1.2.4">
-<h3 data-number="1.2.4" class="anchored" data-anchor-id="navigating-directories"><span class="header-section-number">1.2.4</span> Navigating Directories</h3>
-<ul>
-<li><strong>Who Am I? (<code>whoami</code>):</strong>
-<ul>
-<li><p>This command prints your current user ID.</p></li>
-<li><p>Usage:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-<li><strong>Print Working Directory (<code>pwd</code>):</strong>
-<ul>
-<li><p>This command displays the full path of your current directory.</p></li>
-<li><p>Usage:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-<li><strong>Change Directory (<code>cd</code>):</strong>
-<ul>
-<li><p>Use the <code>cd</code> command to navigate to your working directory.</p></li>
-<li><p>Example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /mnt/s-ws/your_user_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-</ul>
+<section id="step-8-validation-and-functional-studies" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-8-validation-and-functional-studies">Step 8: Validation and Functional Studies</h3>
+<p>The candidate genes and mutations undergo further validation through additional sequencing and functional studies. You collaborate with molecular biologists to study the effects of these mutations on plant physiology under drought conditions.</p>
 </section>
-<section id="listing-the-files-in-the-current-directory" class="level3" data-number="1.2.5">
-<h3 data-number="1.2.5" class="anchored" data-anchor-id="listing-the-files-in-the-current-directory"><span class="header-section-number">1.2.5</span> Listing the files in the current directory</h3>
-<ul>
-<li><strong>ls will list of the contents of the current directory</strong>
-<ul>
-<li>Example:</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><strong>Command not found</strong>
-<ul>
-<li>If the shell can’t find a program whose name is the command you typed, it will print an error message such as:</li>
-</ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul>
-</section>
-</section>
-<section id="summary" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">1.3</span> Summary</h2>
-<p>By following these steps, you will be able to access the server and navigate the directories effectively. Here’s a quick summary:</p>
-<ol type="1">
-<li><strong>Use SSH to connect to the server.</strong></li>
-<li><strong>Enter your password (nothing will be shown as you type).</strong></li>
-<li><strong>Understand the purpose of the home directory and <code>/scratch</code>.</strong></li>
-<li><strong>Use <code>/mnt/s-ws/your_user_id</code> as your working directory.</strong></li>
-<li><strong>Learn basic commands (<code>whoami</code>, <code>pwd</code>, <code>ls</code>) and use Tab for auto-completion.</strong></li>
-</ol>
+<section id="outcome" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="outcome">Outcome</h3>
+<p>You identify a set of genetic markers associated with drought resistance in wheat. This information is used to develop molecular markers for breeding programs, enabling the selection of drought-resistant varieties. The findings are published in a scientific journal, contributing to the development of more resilient wheat crops and enhancing food security.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -801,13 +692,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./First_Time_Accessing_the_Server.html" class="pagination-link" aria-label="First Time Accessing the Server">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">First Time Accessing the Server</span>
+      <a href="./6_How_2_copy.html" class="pagination-link" aria-label="How do you copy to and from the remote computer?">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How do you copy to and from the remote computer?</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./2_Navigating_Files_and_Directories.html" class="pagination-link" aria-label="Navigating Files and Directories">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Navigating Files and Directories</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./7_seq_to_Alignment.html" class="pagination-link" aria-label="From Sequencing to Genome Alignment">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Sequencing to Genome Alignment</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

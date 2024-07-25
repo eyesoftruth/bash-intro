@@ -8,7 +8,7 @@
 
 <meta name="author" content="Hawlader Al-Mamun">
 
-<title>Introduction to BASH - 4&nbsp; Pipes and Filters</title>
+<title>Introduction to BASH and Sequence Analysis - 4&nbsp; Pipes and Filters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./5_loops.html" rel="next">
 <link href="./3_Working_With_Files_and_Directories.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -130,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Introduction to BASH</a> 
+      <a href="./">Introduction to BASH and Sequence Analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -176,6 +177,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pipes and Filters</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Loops</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_How_2_copy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How do you copy to and from the remote computer?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./7_bioinformatics_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./7_seq_to_Alignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Sequencing to Genome Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./7_File_Format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">File Format</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -187,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#wc-word-count-command" id="toc-wc-word-count-command" class="nav-link active" data-scroll-target="#wc-word-count-command"><span class="header-section-number">4.1</span> <code>wc</code> ‘word count’ command</a></li>
-  <li><a href="#capturing-output-from-commands" id="toc-capturing-output-from-commands" class="nav-link" data-scroll-target="#capturing-output-from-commands"><span class="header-section-number">4.2</span> Capturing output from commands</a></li>
+  <li><a href="#capturing-output-from-commands-the-redirect-command" id="toc-capturing-output-from-commands-the-redirect-command" class="nav-link" data-scroll-target="#capturing-output-from-commands-the-redirect-command"><span class="header-section-number">4.2</span> Capturing output from commands: the <code>&gt;</code> (redirect) command</a></li>
   <li><a href="#filtering-output" id="toc-filtering-output" class="nav-link" data-scroll-target="#filtering-output"><span class="header-section-number">4.3</span> Filtering output</a>
   <ul class="collapse">
   <li><a href="#what-does-sort--n-do" id="toc-what-does-sort--n-do" class="nav-link" data-scroll-target="#what-does-sort--n-do"><span class="header-section-number">4.3.1</span> What Does <code>sort -n</code> Do?</a></li>
@@ -201,7 +232,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#passing-output-to-another-command" id="toc-passing-output-to-another-command" class="nav-link" data-scroll-target="#passing-output-to-another-command"><span class="header-section-number">4.5</span> Passing output to another command</a></li>
   <li><a href="#combining-multiple-commands" id="toc-combining-multiple-commands" class="nav-link" data-scroll-target="#combining-multiple-commands"><span class="header-section-number">4.6</span> Combining multiple commands</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.7</span> Summary</a></li>
+  <li><a href="#grep-a-powerful-tool-for-pattern-search" id="toc-grep-a-powerful-tool-for-pattern-search" class="nav-link" data-scroll-target="#grep-a-powerful-tool-for-pattern-search"><span class="header-section-number">4.7</span> <code>grep</code> a powerful tool for pattern search</a>
+  <ul class="collapse">
+  <li><a href="#common-options" id="toc-common-options" class="nav-link" data-scroll-target="#common-options"><span class="header-section-number">4.7.1</span> Common Options</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">4.7.2</span> Examples</a></li>
+  <li><a href="#use-in-bioinformatics" id="toc-use-in-bioinformatics" class="nav-link" data-scroll-target="#use-in-bioinformatics"><span class="header-section-number">4.7.3</span> Use in Bioinformatics</a></li>
+  <li><a href="#example-in-bioinformatics" id="toc-example-in-bioinformatics" class="nav-link" data-scroll-target="#example-in-bioinformatics"><span class="header-section-number">4.7.4</span> Example in Bioinformatics</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.8</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -269,8 +307,8 @@ Why Isn’t It Doing Anything?
 </div>
 </div>
 </section>
-<section id="capturing-output-from-commands" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="capturing-output-from-commands"><span class="header-section-number">4.2</span> Capturing output from commands</h2>
+<section id="capturing-output-from-commands-the-redirect-command" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="capturing-output-from-commands-the-redirect-command"><span class="header-section-number">4.2</span> Capturing output from commands: the <code>&gt;</code> (redirect) command</h2>
 <p>Which of these files contains the fewest lines? It’s an easy question to answer when there are only six files, but what if there were 6000? Our first step toward a solution is to run the command:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> wc <span class="at">-l</span> <span class="pp">*</span>.pdb <span class="op">&gt;</span> lengths.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The greater than symbol, <code>&gt;</code>, tells the shell to <strong>redirect</strong> the command’s output to a file instead of printing it to the screen. This command prints no screen output, because everything that <code>wc</code> would have printed has gone into the file <code>lengths.txt</code> instead. If the file doesn’t exist prior to issuing the command, the shell will create the file. If the file exists already, it will be silently overwritten, which may lead to data loss. Thus, <strong>redirect</strong> commands require caution.</p>
@@ -287,11 +325,11 @@ Why Isn’t It Doing Anything?
 <p>The file <code>shell-lesson-data/exercise-data/numbers.txt</code> contains some lines with numbers:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> ../numbers.txt</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-</span> ../numbers.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-n</span> ../numbers.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>-n</code> option specifies a numerical rather than an alphanumerical sort.</p>
 <p>We will also use the <code>-n</code> option to specify that the sort is numerical instead of alphanumerical. This does <em>not</em> change the file; instead, it sends the sorted result to the screen:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-n</span> lengths.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We can put the sorted list of lines in another temporary file called sorted-lengths.txt by putting &gt; sorted-lengths.txt after the command, just as we used &gt; lengths.txt to put the output of wc into lengths.txt. Once we’ve done that, we can run another command called head to get the first few lines in sorted-lengths.txt:</p>
+<p>We can put the sorted list of lines in another temporary file called <code>sorted-lengths.txt</code> by putting <code>&gt; sorted-lengths.txt</code> after the command, just as we used <code>&gt; lengths.txt</code> to put the output of <code>wc</code> into <code>lengths.txt</code>. Once we’ve done that, we can run another command called <code>head</code> to get the first few lines in sorted-lengths.txt:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-n</span> lengths.txt <span class="op">&gt;</span> sorted-lengths.txt</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 1 sorted-lengths.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Using <code>-n 1</code> with <code>head</code> tells it that we only want the first line of the file; -n 20 would get the first 20, and so on. Since sorted-lengths.txt contains the lengths of our files ordered from least to greatest, the output of head must be the file with the fewest lines</p>
@@ -360,8 +398,89 @@ Why Isn’t It Doing Anything?
 <pre class="output"><code>   9  methane.pdb</code></pre>
 <p>This is exactly like a mathematician nesting functions like <em>log(3x)</em> and saying ‘the log of three times <em>x</em>’. In our case, the algorithm is ‘head of sort of line count of <code>*.pdb</code>’.</p>
 </section>
-<section id="summary" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.7</span> Summary</h2>
+<section id="grep-a-powerful-tool-for-pattern-search" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="grep-a-powerful-tool-for-pattern-search"><span class="header-section-number">4.7</span> <code>grep</code> a powerful tool for pattern search</h2>
+<p>The <code>grep</code> command is a powerful tool used in Unix-like operating systems to search for patterns in text. It can be used to find specific lines in files that match a given pattern. The basic syntax of the grep command is as follows: <code>grep [options] pattern [file...]</code> - <code>[options]</code>: Optional flags that modify the behavior of the grep command. - <code>pattern</code>: The text pattern you want to search for. - <code>[file...]</code>: Optional file names or paths where you want to search for the pattern. If no files are specified, grep will read from standard input (e.g., data piped into it).</p>
+<p>Let’s create a file using <code>nano</code> named <code>example.txt</code> with the following content:</p>
+<p>This is a sample file. It contains some lines. Let’s search for a word in this file. The word we’ll search for is “search.”</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"search"</span> example.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The output would be:</p>
+<pre class="output"><code>Let's search for a word in this file.
+The word we'll search for is "search."
+</code></pre>
+<section id="common-options" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="common-options"><span class="header-section-number">4.7.1</span> Common Options</h3>
+<ul>
+<li><code>-i</code>: Ignore case distinctions in the pattern and input files.</li>
+<li><code>-v</code>: Invert the match, displaying lines that do not match the pattern.</li>
+<li><code>-r</code> or <code>-R</code>: Recursively search directories for the pattern.</li>
+<li><code>-l</code>: Print only the names of files with matching lines.</li>
+<li><code>-n</code>: Prefix each line of output with the line number within its file.</li>
+<li><code>-c</code>: Print only a count of matching lines per file.</li>
+<li><code>-H</code>: Print the filename for each match.</li>
+</ul>
+</section>
+<section id="examples" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">4.7.2</span> Examples</h3>
+<ol type="1">
+<li><strong>Simple Search</strong>:
+<ul>
+<li><code>grep 'hello' file.txt</code>
+<ul>
+<li>Searches for lines containing the string “hello” in <code>file.txt</code>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Case-Insensitive Search</strong>:
+<ul>
+<li><code>grep -i 'hello' file.txt</code>
+<ul>
+<li>Searches for lines containing “hello”, “Hello”, “HELLO”, etc., in <code>file.txt</code>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Recursive Search</strong>:
+<ul>
+<li><code>grep -r 'function' /path/to/directory</code>
+<ul>
+<li>Searches for the string “function” in all files within the specified directory and its subdirectories.</li>
+</ul></li>
+</ul></li>
+<li><strong>Count Matches</strong>:
+<ul>
+<li><code>grep -c 'error' logfile.txt</code>
+<ul>
+<li>Counts the number of lines containing the string “error” in <code>logfile.txt</code>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Exclude Matches</strong>:
+<ul>
+<li><code>grep -v 'test' file.txt</code>
+<ul>
+<li>Displays all lines that do not contain the string “test” in <code>file.txt</code>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Display Line Numbers</strong>:
+<ul>
+<li><code>grep -n 'main' program.c</code>
+<ul>
+<li>Displays matching lines containing the string “main” in <code>program.c</code>, along with their line numbers.</li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+<section id="use-in-bioinformatics" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="use-in-bioinformatics"><span class="header-section-number">4.7.3</span> Use in Bioinformatics</h3>
+<p><code>grep</code> is particularly useful in bioinformatics for: - Searching for specific sequences or patterns in large text files, such as FASTA or FASTQ files. - Filtering lines in output files from various bioinformatics tools. - Quickly identifying and extracting relevant information from log files, configuration files, and other textual data.</p>
+</section>
+<section id="example-in-bioinformatics" class="level3" data-number="4.7.4">
+<h3 data-number="4.7.4" class="anchored" data-anchor-id="example-in-bioinformatics"><span class="header-section-number">4.7.4</span> Example in Bioinformatics</h3>
+<p>Suppose you have a FASTA file (<code>sequences.fasta</code>) and you want to find all sequences containing the motif “ATGCGA”:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-B</span> 1 <span class="st">'ATGCGA'</span> sequences.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command searches for the motif “ATGCGA” and displays the matching lines along with the preceding line (which typically contains the sequence identifier in FASTA format).</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.8</span> Summary</h2>
 <ul>
 <li><code>wc</code> counts lines, words, and characters in its inputs.</li>
 <li><code>cat</code> displays the contents of its inputs.</li>
@@ -372,6 +491,7 @@ Why Isn’t It Doing Anything?
 <li><code>command &gt;&gt; [file]</code> appends a command’s output to a file.</li>
 <li><code>[first] | [second]</code> is a pipeline: the output of the first command is used as the input to the second.</li>
 <li>The best way to use the shell is to use pipes to combine simple single-purpose programs (filters).</li>
+<li><code>grep</code> is a powerful and versatile tool for text searching and processing.</li>
 </ul>
 
 
@@ -794,6 +914,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./5_loops.html" class="pagination-link" aria-label="Loops">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Loops</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
