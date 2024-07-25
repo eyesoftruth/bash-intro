@@ -367,7 +367,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To run FastQC on a specific FASTQ file, you can use the following command:</p>
 <pre><code>./fastqc -o output/filename input_fastq_file
 </code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/mnt/s-ws/everyone/FastQC/fastqc</span> <span class="at">-o</span> /mnt/s-ws/s-100/myresults /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/mnt/s-ws/everyone/FastQC/fastqc</span> <span class="at">-o</span> /mnt/s-ws/s-100/myresults /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If the previous line gives error run the following line</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> /mnt/s-ws/s-100/myresults /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="breaking-down-the-command" class="level4" data-number="8.2.1.2">
 <h4 data-number="8.2.1.2" class="anchored" data-anchor-id="breaking-down-the-command"><span class="header-section-number">8.2.1.2</span> Breaking Down the Command</h4>
@@ -464,8 +470,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>bowtie2-build reference_genome.fasta reference_index</code></p>
 <p>Here, reference_genome.fasta is the file containing the reference genome sequence, and reference_index is for the generated index files.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2-build</span> /mnt/s-ws/everyone/scie4002_refs/najas.fasta /mnt/s-ws/s-100/myresults/najas_reference</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /mnt/s-ws/s-100/myresults/<span class="pp">*</span>najas<span class="pp">*</span> <span class="at">-lh</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or if the previous line does not work</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2-build</span> /mnt/s-ws/everyone/najas.fasta /mnt/s-ws/mamun/myresults/najas_reference</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /mnt/s-ws/s-100/myresults/<span class="pp">*</span>najas<span class="pp">*</span> <span class="at">-lh</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="align-your-cleaned-reads-with-the-reference" class="level3" data-number="8.3.3">
 <h3 data-number="8.3.3" class="anchored" data-anchor-id="align-your-cleaned-reads-with-the-reference"><span class="header-section-number">8.3.3</span> Align your cleaned reads with the reference</h3>
