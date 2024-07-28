@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Hawlader Al-Mamun">
+
+<title>Introduction to BASH and Sequence Analysis - 8&nbsp; From Sequencing to Genome Alignment</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./9_SNP_Calling_and_Genome_Assembly.html" rel="next">
+<link href="./7_bioinformatics_workflow.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./8_seq_to_Alignment.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Sequencing to Genome Alignment</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to BASH and Sequence Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installing VS Code and FileZilla</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./First_Time_Accessing_the_Server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">First Time Accessing the Server</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_Introducing_the_Shell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducing the Shell</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_Navigating_Files_and_Directories.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Navigating Files and Directories</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_Working_With_Files_and_Directories.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With Files and Directories</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_Pipes_and_Filters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pipes and Filters</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Loops</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_How_2_copy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How do you copy to and from the remote computer?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./7_bioinformatics_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./8_seq_to_Alignment.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Sequencing to Genome Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./9_SNP_Calling_and_Genome_Assembly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">SNP Calling and Genome Assembly</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_File_Format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">File Format</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sequencing" id="toc-sequencing" class="nav-link active" data-scroll-target="#sequencing"><span class="header-section-number">8.1</span> Sequencing</a>
+  <ul class="collapse">
+  <li><a href="#whats-a-fastq-file" id="toc-whats-a-fastq-file" class="nav-link" data-scroll-target="#whats-a-fastq-file"><span class="header-section-number">8.1.1</span> What’s a fastq file?</a></li>
+  <li><a href="#some-sanity-checks-first" id="toc-some-sanity-checks-first" class="nav-link" data-scroll-target="#some-sanity-checks-first"><span class="header-section-number">8.1.2</span> Some sanity checks first</a></li>
+  </ul></li>
+  <li><a href="#quality-control-and-trimming" id="toc-quality-control-and-trimming" class="nav-link" data-scroll-target="#quality-control-and-trimming"><span class="header-section-number">8.2</span> Quality Control and Trimming</a>
+  <ul class="collapse">
+  <li><a href="#fastqc" id="toc-fastqc" class="nav-link" data-scroll-target="#fastqc"><span class="header-section-number">8.2.1</span> FastQC</a></li>
+  <li><a href="#quality-control-using-fastp" id="toc-quality-control-using-fastp" class="nav-link" data-scroll-target="#quality-control-using-fastp"><span class="header-section-number">8.2.2</span> Quality control using <code>fastp</code></a></li>
+  </ul></li>
+  <li><a href="#genome-alignment" id="toc-genome-alignment" class="nav-link" data-scroll-target="#genome-alignment"><span class="header-section-number">8.3</span> Genome Alignment</a>
+  <ul class="collapse">
+  <li><a href="#bowtie2" id="toc-bowtie2" class="nav-link" data-scroll-target="#bowtie2"><span class="header-section-number">8.3.1</span> <code>bowtie2</code></a></li>
+  <li><a href="#build-and-index-the-reference-database-using-bowtie2" id="toc-build-and-index-the-reference-database-using-bowtie2" class="nav-link" data-scroll-target="#build-and-index-the-reference-database-using-bowtie2"><span class="header-section-number">8.3.2</span> Build and index the reference database using bowtie2</a></li>
+  <li><a href="#align-your-cleaned-reads-with-the-reference" id="toc-align-your-cleaned-reads-with-the-reference" class="nav-link" data-scroll-target="#align-your-cleaned-reads-with-the-reference"><span class="header-section-number">8.3.3</span> Align your cleaned reads with the reference</a></li>
+  <li><a href="#output-and-formats" id="toc-output-and-formats" class="nav-link" data-scroll-target="#output-and-formats"><span class="header-section-number">8.3.4</span> Output and Formats:</a></li>
+  <li><a href="#samtools" id="toc-samtools" class="nav-link" data-scroll-target="#samtools"><span class="header-section-number">8.3.5</span> <code>samtools</code></a></li>
+  <li><a href="#use-bedtools-to-check-which-genes-are-covered-by-reads" id="toc-use-bedtools-to-check-which-genes-are-covered-by-reads" class="nav-link" data-scroll-target="#use-bedtools-to-check-which-genes-are-covered-by-reads"><span class="header-section-number">8.3.6</span> Use bedtools to check which genes are covered by reads</a></li>
+  <li><a href="#gff3-file-format" id="toc-gff3-file-format" class="nav-link" data-scroll-target="#gff3-file-format"><span class="header-section-number">8.3.7</span> GFF3 File format</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Sequencing to Genome Alignment</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Hawlader Al-Mamun </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sequencing" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sequencing"><span class="header-section-number">8.1</span> Sequencing</h2>
+<p><strong>Description</strong>: Sequencing is the process of determining the nucleotide sequence of a DNA molecule. Modern sequencing technologies, such as Illumina, PacBio, and Oxford Nanopore, generate large amounts of raw sequence data.</p>
+<p><strong>Files Produced</strong>: - <strong>FASTQ</strong>: Contains raw sequencing reads with associated quality scores.</p>
+<section id="whats-a-fastq-file" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="whats-a-fastq-file"><span class="header-section-number">8.1.1</span> What’s a fastq file?</h3>
+<p>A FASTQ file consists of a series of records, with each record representing a single sequence read. Each record typically consists of four lines in the following format:</p>
+<ul>
+<li><p><code>Sequence Identifier (ID)</code> Line: Begins with a “@” symbol and contains a unique identifier for the sequence read. This line is used to keep track of the individual read and may include additional information about the read and the sequencing process.</p></li>
+<li><p><code>Sequence</code> Line: Contains the actual DNA or RNA nucleotide sequence of the read. It consists of a string of characters, where each character represents a specific nucleotide (A for adenine, C for cytosine, G for guanine, and T for thymine in DNA, or U for uracil in RNA).</p></li>
+<li><p><code>Quality Identifier</code> Line: Starts with a “+” symbol and is usually just a repetition of the identifier from the Sequence Line.</p></li>
+<li><p><code>Quality Scores</code> Line: Contains a string of characters representing the quality scores of the corresponding bases in the Sequence Line.</p></li>
+</ul>
+<p>Let’s have a better look!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-4</span> /mnt/s-ws/everyone/Halophila_ovalis/HWWJ5CCXX_8_160602_FR07958939_Other__R_160601_ANISEV_DNA_M001_R1.fastq.first_1000000.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="img/output_70_0.png" width="1200" height="120"></p>
+<section id="quality" class="level4" data-number="8.1.1.1">
+<h4 data-number="8.1.1.1" class="anchored" data-anchor-id="quality"><span class="header-section-number">8.1.1.1</span> Quality</h4>
+<p>The quality, also called phred score, is the probability that the corresponding basecall is incorrect.</p>
+<p>Phred scores use a logarithmic scale, and are represented by ASCII characters, mapping to a quality usually going from 0 to 40.</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Phred Quality Score</th>
+<th>Probability of incorrect base call</th>
+<th>Base call accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>1 in 10</td>
+<td>90%</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>1 in 100</td>
+<td>99%</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>1 in 1000</td>
+<td>99.9%</td>
+</tr>
+<tr class="even">
+<td>40</td>
+<td>1 in 10,000</td>
+<td>99.99%</td>
+</tr>
+<tr class="odd">
+<td>50</td>
+<td>1 in 100,000</td>
+<td>99.999%</td>
+</tr>
+<tr class="even">
+<td>60</td>
+<td>1 in 1,000,000</td>
+<td>99.9999%</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="some-sanity-checks-first" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="some-sanity-checks-first"><span class="header-section-number">8.1.2</span> Some sanity checks first</h3>
+<p><strong>4 lines per reads</strong> We don’t want to work with broken data. Let’s count how many reads are in each file! A fastq file has 4 lines for each read</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> /mnt/s-ws/everyone/Halophila_ovalis/<span class="pp">*</span>fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check out last lines (broken copies usually have broken last line) tail gives you X last lines, -4 gives you the last read</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-4</span> /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>let’s look at them all</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fastq_file <span class="kw">in</span> /mnt/s-ws/everyone/Halophila_ovalis/<span class="pp">*</span>fastq<span class="kw">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">do</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="bu">echo</span> <span class="va">$l</span> <span class="co"># print the name of the file</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">tail</span> <span class="at">-4</span> <span class="va">$fastq_file</span> <span class="co"># print the last four lines</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a> <span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Other possibilities: Check md5sum</strong> md5sum is a tiny combination of letters which is generated based on the content of the file. It can be used to proof that a file is identical with another one</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">md5sum</span> /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The long thing <code>92764326cc31706559eb20dab0ce4142</code> is the MD5 hash,<font color="red"> <strong>this is reasonably unique for this particular file and can be used to identify it, or to check whether two files are identical</strong> </font>(NOTE: In some rare cases two files can have the same md5sum, but for all intents and purposes we can ignore that, it’s extremely rare to happen by chance)</p>
+</section>
+</section>
+<section id="quality-control-and-trimming" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="quality-control-and-trimming"><span class="header-section-number">8.2</span> Quality Control and Trimming</h2>
+<p><strong>Description</strong>: Ensuring the quality of raw sequencing data is critical. This step involves identifying and filtering out low-quality reads and adapter sequences.</p>
+<p><img src="img/FastQCper_base_quality.png" class="img-fluid"></p>
+<p><strong>Files Produced</strong>: - <strong>Trimmed FASTQ</strong>: Quality-filtered reads.</p>
+<p><strong>Tools/Software</strong>: - <strong>FastQC</strong>: Quality assessment of raw reads. - <strong>Trimmomatic</strong> or <strong>Cutadapt</strong>: Trimming adapters and low-quality bases.</p>
+<section id="fastqc" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="fastqc"><span class="header-section-number">8.2.1</span> FastQC</h3>
+<p>Let’s look at sequencing qualities - we’ll use FASTQC. FastQC (Fast Quality Control) is a widely used bioinformatics tool designed to assess the quality of high-throughput sequencing data, such as data generated from next-generation sequencing (NGS) platforms. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/</p>
+<section id="running-fastqc-for-quality-check" class="level4" data-number="8.2.1.1">
+<h4 data-number="8.2.1.1" class="anchored" data-anchor-id="running-fastqc-for-quality-check"><span class="header-section-number">8.2.1.1</span> Running FastQC for Quality Check</h4>
+<p>To run FastQC on a specific FASTQ file, you can use the following command:</p>
+<pre><code>./fastqc -o output/filename input_fastq_file
+</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/mnt/s-ws/everyone/FastQC/fastqc</span> <span class="at">-o</span> /mnt/s-ws/s-100/myresults /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If the previous line gives error run the following line</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> /mnt/s-ws/s-100/myresults /mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="breaking-down-the-command" class="level4" data-number="8.2.1.2">
+<h4 data-number="8.2.1.2" class="anchored" data-anchor-id="breaking-down-the-command"><span class="header-section-number">8.2.1.2</span> Breaking Down the Command</h4>
+<ol type="1">
+<li><p><strong>FastQC Executable Path</strong>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/mnt/s-ws/everyone/FastQC/fastqc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is the path to the FastQC executable. Make sure to use the correct path where FastQC is installed on your system.</p></li>
+<li><p><strong>Output Directory Option (<code>-o</code>)</strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-o</span> /mnt/s-ws/s-100/myresults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-o</code> option specifies the directory where FastQC will save its output files. In this example, the results will be saved to <code>/mnt/s-ws/s-100/myresults</code>. Make sure that you have created a folder <code>myresults</code> in your working directory.</p></li>
+<li><p><strong>Input FASTQ File</strong>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is the path to the FASTQ file you want to analyze. In this example, it is <code>/mnt/s-ws/everyone/Zostera_marina/SRR9879327.sra_1.first_1000000.fastq</code>.</p></li>
+<li><p><strong>Check Results</strong>: Once the command finishes running, navigate to the output directory to check the results:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /mnt/s-ws/s-100/myresults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will find several files, including:</p>
+<ul>
+<li>A <code>.html</code> file: An interactive report with various quality metrics.</li>
+<li>A <code>.zip</code> file: Contains all the raw data and plots used in the HTML report.</li>
+</ul></li>
+</ol>
+<p>Open the HTML file in a web browser to view the detailed quality report.</p>
+</section>
+<section id="fastqc-report" class="level4" data-number="8.2.1.3">
+<h4 data-number="8.2.1.3" class="anchored" data-anchor-id="fastqc-report"><span class="header-section-number">8.2.1.3</span> FastQC report</h4>
+<p>A FastQC report is a quality control report generated by the FastQC software, which is widely used to assess the quality of sequencing data, particularly data from high-throughput sequencing technologies like Illumina. The FastQC report provides valuable insights into the quality of the raw sequencing data and helps to identify potential issues that might affect downstream analyses.</p>
+<p>Here’s an explanation of the key components and sections typically found in a FastQC report:</p>
+<ol type="1">
+<li><p><strong>Basic Statistics:</strong> This section provides general statistics about the input data, such as the total number of reads, the read length distribution, the percentage of GC content, and the overall sequence duplication levels. These statistics give an overview of the sequencing run and provide information about the diversity and complexity of the library.</p></li>
+<li><p><strong>Per Base Sequence Quality:</strong> This section displays a graph showing the average quality scores for each position in the read. Quality scores are represented using Phred scores, and a higher Phred score indicates higher sequencing accuracy. This graph helps identify regions of the read with lower quality, which might be affected by sequencing errors or other issues.</p></li>
+<li><p><strong>Per Sequence Quality Scores:</strong> In this section, a box plot or histogram is provided to show the distribution of quality scores across all reads. It helps assess the overall quality of the sequencing data and identify any systematic biases or anomalies.</p></li>
+<li><p><strong>Per Base Sequence Content:</strong> This section shows the percentage of each nucleotide (A, C, G, T, or U) at each position in the read. It helps identify biases in nucleotide composition that might indicate issues with library preparation or sequencing chemistry.</p></li>
+<li><p><strong>Per Sequence GC Content:</strong> This graph shows the distribution of GC content across all reads in the dataset. Deviations from the expected GC content could indicate problems with the library or biases in the sequencing process.</p></li>
+<li><p><strong>Per Base N Content:</strong> The graph in this section shows the percentage of ambiguous or undetermined bases (N) at each position in the read. High N content might indicate sequencing or library preparation issues.</p></li>
+<li><p><strong>Sequence Length Distribution:</strong> This section provides a histogram of read lengths, helping to identify any variations in read length that might affect downstream analyses.</p></li>
+<li><p><strong>Overrepresented Sequences:</strong> In this section, FastQC lists any sequences that are overrepresented in the dataset. These could be contaminants or adapter sequences that need to be removed before further analysis.</p></li>
+<li><p><strong>Adapter Content:</strong> This section checks for the presence of known adapter sequences in the reads. If adapters are detected, it suggests potential issues with library preparation or sequencing.</p></li>
+</ol>
+</section>
+</section>
+<section id="quality-control-using-fastp" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="quality-control-using-fastp"><span class="header-section-number">8.2.2</span> Quality control using <code>fastp</code></h3>
+<p>For EVERY sequencing project, you have to run quality control!</p>
+<p>Usually: Remove low quality regions from reads, and remove adapters</p>
+<p>As a first step, let’s use a data-cleaning program to clean our reads We’ll use <code>fastp</code> since it’s easy to use For more information about fastp click on this <a href="https://github.com/OpenGene/fastp">link</a></p>
+<section id="paired-end-sequence-reads" class="level4" data-number="8.2.2.1">
+<h4 data-number="8.2.2.1" class="anchored" data-anchor-id="paired-end-sequence-reads"><span class="header-section-number">8.2.2.1</span> Paired-end sequence reads</h4>
+<p>In paired-end sequencing, DNA or RNA fragments are sequenced from both ends, producing two separate sequence reads for each fragment.</p>
+</section>
+<section id="single-end-data" class="level4" data-number="8.2.2.2">
+<h4 data-number="8.2.2.2" class="anchored" data-anchor-id="single-end-data"><span class="header-section-number">8.2.2.2</span> Single end data</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="at">-i</span> in.fstq <span class="at">-o</span> out.fastq </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="for-paired-end-data" class="level4" data-number="8.2.2.3">
+<h4 data-number="8.2.2.3" class="anchored" data-anchor-id="for-paired-end-data"><span class="header-section-number">8.2.2.3</span> For paired end data</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="at">-i</span> in.R1.fastq <span class="at">-I</span> in.R2.fastq <span class="at">-o</span> out.R1.fastq <span class="at">-O</span> out.R2.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>-i input file 1 (pair 1 for paired end read)</li>
+<li>-I input file 2 for paired end reads</li>
+<li>-o output file 1 (pair 1 for paired end read)</li>
+<li>-O output file 2 for paired end reads</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="at">-i</span> /mnt/s-ws/everyone/Zostera_muelleri/MB_Z_ATCACG_L006_R1_001.fastq.first_1000000.fastq <span class="at">-o</span> ./myresults/R1_001.fastq.first_1000000.trimmed.fastq <span class="at">-I</span> /mnt/s-ws/everyone/Zostera_muelleri/MB_Z_ATCACG_L006_R2_001.fastq.first_1000000.fastq <span class="at">-O</span> ./myresults/R2_001.fastq.first_1000000.trimmed.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This should take a few seconds to minutes, will print some statistics Is the output as expected from the FASTQ output?</p>
+<p>check output files with ls and less:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> /mnt/s-ws/everyone/Zostera_muelleri/MB_Z_ATCACG_L006_R1_001.fastq.first_1000000.fastq</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> myresults/R1_001.fastq.first_1000000.trimmed.fastq</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> /mnt/s-ws/everyone/Zostera_muelleri/MB_Z_ATCACG_L006_R2_001.fastq.first_1000000.fastq</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> myresults/R2_001.fastq.first_1000000.trimmed.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="genome-alignment" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="genome-alignment"><span class="header-section-number">8.3</span> Genome Alignment</h2>
+<p>Now we have cleaned reads. That concludes the QC part and we can actually start on the biology! <strong>Genome alignment</strong> refers to the process of comparing and aligning entire genomes or large genomic segments to identify regions of similarity, differences, and structural variations. This process is crucial in comparative genomics, evolutionary biology, and functional genomics.</p>
+<p>We’ll align these reads against two given references to see whether we can find any missing genes. We’ll use <code>bowtie2</code> to align these reads.</p>
+<ul>
+<li>A reference genome is a collection of contigs</li>
+<li>A contig is a stretch of DNA sequence encoded as A,G,C,T,N</li>
+<li>Typically comes in FASTA format.</li>
+</ul>
+<section id="bowtie2" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="bowtie2"><span class="header-section-number">8.3.1</span> <code>bowtie2</code></h3>
+<p><code>bowtie2</code> is a widely used bioinformatics tool that aligns DNA or RNA sequencing reads to a reference genome. <a href="https://bowtie-bio.sourceforge.net/bowtie2/index.shtml">bowtie2</a></p>
+</section>
+<section id="build-and-index-the-reference-database-using-bowtie2" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="build-and-index-the-reference-database-using-bowtie2"><span class="header-section-number">8.3.2</span> Build and index the reference database using bowtie2</h3>
+<p>To use Bowtie2, you must first create an index of the reference genome or transcriptome you want to align your reads to. Indexing is a preprocessing step that allows Bowtie2 to rapidly search for and align reads against the reference. You only need to index the reference once, and it generates a set of files with specific extensions that Bowtie2 uses during the alignment process. The indexing is done using the bowtie2-build command:</p>
+<p><code>bowtie2-build reference_genome.fasta reference_index</code></p>
+<p>Here, reference_genome.fasta is the file containing the reference genome sequence, and reference_index is for the generated index files.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ./myresults</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># copy the reference into myresults folder</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#for teach-maker2</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /mnt/s-ws/everyone/scie4002_refs/najas.fasta .</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># or if the previous line does not work (for teach-maker3)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /mnt/s-ws/everyone/najas.fasta .</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Build index for reference</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2-build</span> najas.fasta najas_reference</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># bowtie2 alignment</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>najas<span class="pp">*</span> <span class="at">-lh</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="align-your-cleaned-reads-with-the-reference" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="align-your-cleaned-reads-with-the-reference"><span class="header-section-number">8.3.3</span> Align your cleaned reads with the reference</h3>
+<p>After indexing the reference, you can align your sequencing reads using Bowtie2. The typical input for Bowtie2 is paired-end reads (two separate files containing forward and reverse reads) or single-end reads (one file). The basic command to align reads is:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2</span> <span class="at">-x</span> reference_index <span class="at">-1</span> forward_reads.fastq <span class="at">-2</span> reverse_reads.fastq <span class="at">-S</span> output.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this command:</p>
+<ul>
+<li><code>-x</code> specifies the indexed reference genome.</li>
+<li><code>-1</code> and <code>-2</code> provide the paths to the input FASTQ files containing paired-end reads (forward and reverse reads).</li>
+<li><code>-S</code> designates the output file in SAM format, which contains the alignment results.</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2</span> <span class="at">-x</span> najas_reference <span class="at">-1</span> R1_001.fastq.first_1000000.trimmed.fastq <span class="at">-2</span> R2_001.fastq.first_1000000.trimmed.fastq <span class="at">-S</span> Alignments.sam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="output-and-formats" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="output-and-formats"><span class="header-section-number">8.3.4</span> Output and Formats:</h3>
+<p>Bowtie2 generates alignment results in SAM (Sequence Alignment/Map) format by default. The output SAM file contains information about each read’s alignment position, quality, and other mapping-related details. You can further process the SAM file using other bioinformatics tools for downstream analysis. A typical SAM (Sequence Alignment/Map) file is a text-based format used to store the results of sequence read alignments to a reference genome or transcriptome. It provides a standardized way to represent the mapping information, quality scores, and additional metadata for each aligned read. SAM files are widely used in bioinformatics and are essential for various downstream analyses, including variant calling, gene expression quantification, and genome assembly.</p>
+<p>Here’s a description of the main components of a typical SAM file:</p>
+<ol type="1">
+<li><p><strong>Header Section:</strong> The SAM file starts with the header section, which contains metadata and information about the reference genome, software used, and other optional details. The header lines begin with the ‘@’ symbol.</p></li>
+<li><p><strong>Alignment Records:</strong> Following the header section, each alignment record corresponds to a single read that has been aligned to the reference genome. Alignment records start with fixed fields, each separated by a tab character, representing important information about the read and its alignment.</p>
+<ul>
+<li><strong>QNAME:</strong> Read name or identifier. It should be unique within the file.</li>
+<li><strong>FLAG:</strong> Bitwise flags representing various properties of the read and alignment, such as paired-end, strand, read unmapped, etc.</li>
+<li><strong>RNAME:</strong> Reference sequence name where the read is aligned. It refers to the reference genome sequence identifier. If there will be no alignmet, it will be a “*“. <code>"*"</code> is the special letter SAM files use to mean ‘no reference sequence’</li>
+<li><strong>POS:</strong> 1-based leftmost position of the aligned read on the reference genome.</li>
+<li><strong>MAPQ:</strong> Mapping quality score, representing the confidence of the alignment.</li>
+<li><strong>CIGAR:</strong> CIGAR string indicating the alignment details, including matches, insertions, deletions, etc.</li>
+<li><strong>RNEXT:</strong> Reference sequence name of the mate/next read for paired-end data.</li>
+<li><strong>PNEXT:</strong> 1-based position of the mate/next read on the reference genome for paired-end data.</li>
+<li><strong>TLEN:</strong> Signed observed template length for paired-end data.</li>
+<li><strong>SEQ:</strong> Read sequence.</li>
+<li><strong>QUAL:</strong> Quality scores corresponding to each base in the read sequence.</li>
+</ul></li>
+<li><p><strong>Optional Fields:</strong> After the fixed fields, there can be optional fields that provide additional information about the read, alignment, or experimental conditions. These fields are tab-separated and have a TAG:VALUE format. For example, <code>AS:i:100</code> indicates an alignment score of 100.</p></li>
+</ol>
+<p>A sample alignment record in a SAM file might look like this:</p>
+<pre><code>ERR1234567.1 83 chr1 100 30 50M = 200 100 ATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCG + !"#"$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefgh</code></pre>
+<p>SAM files are human-readable and can be processed using various bioinformatics tools and libraries. For more information click on this <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">link</a></p>
+</section>
+<section id="samtools" class="level3" data-number="8.3.5">
+<h3 data-number="8.3.5" class="anchored" data-anchor-id="samtools"><span class="header-section-number">8.3.5</span> <code>samtools</code></h3>
+<p>For large datasets, it is common to convert SAM files to the more space-efficient BAM format using tools like <code>samtools</code>, as it enables faster processing and better utilization of computational resources.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2</span> <span class="at">-x</span> najas_reference <span class="at">-1</span> R1_001.fastq.first_1000000.trimmed.fastq <span class="at">-2</span> R2_001.fastq.first_1000000.trimmed.fastq <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-o</span> Alignments_sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="sanity-check---how-many-reads-align" class="level4" data-number="8.3.5.1">
+<h4 data-number="8.3.5.1" class="anchored" data-anchor-id="sanity-check---how-many-reads-align"><span class="header-section-number">8.3.5.1</span> Sanity check - how many reads align?</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view Alignments_sorted.bam  <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">'*'</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This means: <code>grep -v</code> searches for the opposites, so remove all lines with <code>*</code> is the special letter SAM files use to mean ‘no reference sequence’ and then count the lines</p>
+</section>
+<section id="aligned-reads-output-to-a-text-file" class="level4" data-number="8.3.5.2">
+<h4 data-number="8.3.5.2" class="anchored" data-anchor-id="aligned-reads-output-to-a-text-file"><span class="header-section-number">8.3.5.2</span> Aligned reads output to a text file</h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view Alignments_sorted.bam  <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">'*'</span> <span class="op">&gt;</span> aligned_reads.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="use-bedtools-to-check-which-genes-are-covered-by-reads" class="level3" data-number="8.3.6">
+<h3 data-number="8.3.6" class="anchored" data-anchor-id="use-bedtools-to-check-which-genes-are-covered-by-reads"><span class="header-section-number">8.3.6</span> Use bedtools to check which genes are covered by reads</h3>
+<p>Bedtools provides a collection of powerful command-line tools that allow to perform various operations on genomic intervals, including intersections, unions, subsetting, merging, and more. A fantastic tutorial on bedtools can be found <a href="http://quinlanlab.org/tutorials/bedtools/bedtools.html">here:</a></p>
+<p>Use bedtools to check which genes are covered by reads</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#teach-maker2</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /mnt/s-ws/everyone/scie4002_refs/najas.gff3 .</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#teach-maker3</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /mnt/s-ws/everyone/najas.gff3 .</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bedtools</span> intersect <span class="at">-a</span> najas.gff3 <span class="at">-b</span> Alignments_sorted.bam <span class="kw">|</span> <span class="fu">grep</span> gene <span class="kw">|</span> <span class="fu">less</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The command <code>bedtools intersect</code> is used to find overlapping features between two files, one in BED/GFF/GTF format (<code>-a</code>), and the other in BAM format (<code>-b</code>).</p>
+<p>In this specific case: - <code>-a najas.gff3</code>: This specifies the input file in GFF3 format, containing features (e.g., genes, transcripts, regions) of interest from the “najas” reference genome. - <code>-b Alignments_sorted.bam</code>: This specifies the input file in BAM format, containing read alignments (typically from a sequencing experiment) aligned to the “najas” reference genome.</p>
+<p>The command will identify any overlapping features between the GFF3 file and the aligned reads in the BAM file. The resulting output will show which reads align to the annotated features in the GFF3 file, providing information about the spatial relationship between the reads and the annotated genomic elements.</p>
+<p>The <code>|</code> (pipe) symbol is used to pass the output of the <code>bedtools intersect</code> command as input to the <code>grep</code> command. The <code>grep</code> command is then used to filter the output and only show lines containing the word “gene.”</p>
+<p>In summary, the entire command will identify any overlapping features between the GFF3 file and the aligned reads in the BAM file and then filter the output to show only those lines that correspond to genes present in the GFF3 file. This can help extract information specifically related to genes from the alignment results.</p>
+</section>
+<section id="gff3-file-format" class="level3" data-number="8.3.7">
+<h3 data-number="8.3.7" class="anchored" data-anchor-id="gff3-file-format"><span class="header-section-number">8.3.7</span> GFF3 File format</h3>
+<p>A GFF3 (Generic Feature Format Version 3) file is a standard text-based file format commonly used in bioinformatics to represent genomic annotations and features. GFF3 files provide a structured and standardized way to describe the location, properties, and attributes of various biological features on a reference genome, such as genes, exons, transcripts, and other genomic elements.</p>
+<p>Here’s a brief overview of the key components of a GFF3 file:</p>
+<ol type="1">
+<li><p><strong>Header Lines:</strong> The GFF3 file may start with optional header lines that provide general information about the data and the source of the annotations. Header lines typically begin with the ‘##’ symbol.</p></li>
+<li><p><strong>Feature Lines:</strong> The main part of the GFF3 file consists of feature lines, each representing a genomic feature or annotation. Feature lines have nine tab-separated columns, which define specific attributes of the feature:</p>
+<ul>
+<li><strong>Column 1 (seqid):</strong> Name of the reference sequence (e.g., chromosome or contig) where the feature is located.</li>
+<li><strong>Column 2 (source):</strong> The source or program that generated the annotation, often a database or bioinformatics tool.</li>
+<li><strong>Column 3 (type):</strong> The type of the genomic feature (e.g., gene, mRNA, exon, CDS, etc.). This follows controlled vocabulary terms such as “gene,” “exon,” and “mRNA.”</li>
+<li><strong>Column 4 (start):</strong> Start position of the feature on the reference sequence. It is 1-based, meaning the first position is represented as 1.</li>
+<li><strong>Column 5 (end):</strong> End position of the feature on the reference sequence (inclusive).</li>
+<li><strong>Column 6 (score):</strong> An optional numeric value representing the confidence or score of the feature. Often used for quantitative data like expression levels.</li>
+<li><strong>Column 7 (strand):</strong> The strand of the feature, indicated by a “+” (forward strand) or “-” (reverse strand).</li>
+<li><strong>Column 8 (phase):</strong> For features like coding sequences (CDS), this column specifies the reading frame (0, 1, or 2) with respect to the start codon.</li>
+<li><strong>Column 9 (attributes):</strong> A semicolon-separated list of key-value pairs representing additional information about the feature. Common attributes include gene IDs, transcript IDs, gene names, and other feature-specific details.</li>
+</ul></li>
+<li><p><strong>Comment Lines:</strong> GFF3 files may also include comment lines that provide additional context or explanations for the annotations.</p></li>
+</ol>
+<p>GFF3 files are widely used in genome annotation projects, as they offer a consistent and flexible format to store genomic feature data. Various bioinformatics tools and genome browsers support GFF3 files, allowing researchers to visualize and analyze genomic annotations effectively.</p>
+<section id="can-you-output-this-to-a-text-file" class="level4" data-number="8.3.7.1">
+<h4 data-number="8.3.7.1" class="anchored" data-anchor-id="can-you-output-this-to-a-text-file"><span class="header-section-number">8.3.7.1</span> <code>Can you output this to a text file?</code></h4>
+<p>Now we’ll use bedtools to check whether any reads don’t align to our given genes</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bedtools</span> intersect <span class="at">-v</span> <span class="at">-a</span> najas.gff3 <span class="at">-b</span> Alignments_sorted.bam <span class="kw">|</span> <span class="fu">grep</span> gene <span class="kw">|</span> <span class="fu">less</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>-v means invert - which genes have 0 coverage?</li>
+<li>What are these genes?</li>
+</ul>
+<p>Google!</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./7_bioinformatics_workflow.html" class="pagination-link" aria-label="A typical bioinformatics workflow">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A typical bioinformatics workflow</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./9_SNP_Calling_and_Genome_Assembly.html" class="pagination-link" aria-label="SNP Calling and Genome Assembly">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">SNP Calling and Genome Assembly</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
