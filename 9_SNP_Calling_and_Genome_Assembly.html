@@ -289,16 +289,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">freebayes</span> <span class="at">--fasta-reference</span> najas.fasta <span class="at">-v</span> UNFILTERED_RESULTS.vcf Alignments_sorted.bam</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> UNFILTERED_RESULTS.vcf <span class="at">--recode</span> <span class="at">--out</span> freeB_SNPs <span class="at">--minQ</span> 15 <span class="at">--minDP</span> 10</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> UNFILTERED_RESULTS.vcf <span class="at">--recode</span> <span class="at">--out</span> freeB_SNPs <span class="at">--minQ</span> 15 <span class="at">--minDP</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="bcftools-snp-calling" class="level3" data-number="9.1.3">
 <h3 data-number="9.1.3" class="anchored" data-anchor-id="bcftools-snp-calling"><span class="header-section-number">9.1.3</span> <code>bcftools</code> SNP calling</h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> mpileup <span class="at">-f</span> najas.fasta Alignments_sorted.bam <span class="kw">|</span> <span class="ex">bcftools</span> call <span class="at">-mv</span> <span class="at">-Ov</span> <span class="at">-o</span> bcftools_calls.vcf</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> bcftools_calls.vcf <span class="at">--recode</span> <span class="at">--out</span> bcftools_filtered_callsSNPs <span class="at">--minQ</span> 15 <span class="at">--minDP</span> 10</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> bcftools_calls.vcf <span class="at">--recode</span> <span class="at">--out</span> bcftools_filtered_callsSNPs <span class="at">--minQ</span> 15 <span class="at">--minDP</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="and-compare-the-results" class="level3" data-number="9.1.4">
 <h3 data-number="9.1.4" class="anchored" data-anchor-id="and-compare-the-results"><span class="header-section-number">9.1.4</span> And compare the results!</h3>
@@ -376,6 +374,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>setting up a Velvet assembly using <code>velveth</code></strong></p>
 <p><code>velveth</code> program, is part of the Velvet de novo genome assembly software.</p>
 <p>The following command is for setting up a Velvet assembly(to create the hash table for the Velvet assembler) with the specified k-mer size (29 in this case, you can try a random one 21 - 141 so we can compare) using paired-end short read data provided in separate FASTQ files (<code>first.fastq</code> and <code>second.fastq</code>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why should you choose an odd k-mer length when assembling a genome?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is not used by random chance: when writing a bioinformatics tool k-mer based, it does not know which DNA strand it is reading from; thus it needs to take into consideration the relationship within a k-mer and its reverse complement.</p>
+<p>And that where the problem with an even k-mer length rises!!</p>
+<p>An even k-mer length can generate DNA <a href="https://en.wikipedia.org/wiki/Palindrome">palindromes</a>, and an odd k-mer never does. In DNA language, a palindrome is a sequence that is its own reverse complement. That generates ambiguity in the <a href="https://en.wikipedia.org/wiki/De_Bruijn_graph">de Bruijn graph</a> when running Velvet or SPAdes and makes assembling reads more problematic.</p>
+<p>For example, “AGCGCT” is a 6-mer (even length) and its reverse complete is also “AGCGCT”. This would never happen with an odd k-mer because of the extra-base: “AGCGCTA” is a 7-mer and its reverse is “TAGCGCT”. Conclusion</p>
+<p>An even k-mer length may have its reverse complement to be a palindrome which generates ambiguity in the de Bruijn graph when running SPades and makes assembling reads more challenging.</p>
+</div>
+</div>
+</div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">velveth</span> kmer29_velvet_Assembly 29 <span class="at">-shortPaired</span> <span class="at">-fastq</span> <span class="at">-separate</span> first.fastq second.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s break down the components of the command:</p>
 <ol type="1">
